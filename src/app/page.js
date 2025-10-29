@@ -1,95 +1,78 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import HomePreventiveSection from "@/components/HomePreventiveSection";
+import Header from "../components/Header";
+import InfoChoiceSection from "@/components/InfoChoiceSection";
+import ProductsSection from "@/components/ProductsSection";
+import Divider from "@/components/Divider";
+import WhoSection from "@/components/WhoSection";
+import Footer from "@/components/Footer";
+import ClientScrollWrapper from "@/components/ClientScrollWrapper";
 
-export default function Home() {
+export default async function HomePage() {
+  const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+  const res = await fetch(
+    `${base}/api/homepage?populate[section][populate]=*`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  const { data } = await res.json();
+  const homepage = data;
+  const header = homepage.section?.find(
+    (s) => s.__component === "shared.header"
+  );
+  const home_preventive_section = homepage.section?.find(
+    (s) => s.__component === "shared.home-preventive-section"
+  );
+  const info_choice_section = homepage.section?.find(
+    (s) => s.__component === "shared.info-choice-section"
+  );
+  const products_section = homepage.section?.find(
+    (s) => s.__component === "shared.products-section"
+  );
+  const who_section = homepage.section?.find(
+    (s) => s.__component === "shared.who-section"
+  );
+  const footer = homepage.section?.find(
+    (s) => s.__component === "shared.footer"
+  );
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <ClientScrollWrapper>
+      <main>
+        {/* HEADER */}
+        <Header data={header} />
+        {/* ALTRE SEZIONI */}
+        <HomePreventiveSection {...home_preventive_section} logo={header.logo}/>
+        <InfoChoiceSection {...info_choice_section} />
+        <ProductsSection {...products_section} />
+        <WhoSection
+          description={who_section.content}
+          title={who_section.title}
+          images={[
+            {
+              url: `${who_section.image.url}`,
+              alternativeText: "Laboratorio 3D",
+            },
+          ]}
         />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      <footer>
+        <Footer 
+          logo={footer.logo}
+          sedeOperativa={footer.sedeOperativa}
+          sedeLegale={footer.sedeLegale}
+          pIva={footer.pIva}
+          telefono={footer.telefono}
+          email={footer.email}
+          social={{ instagram: footer.instagram }}
+          linkUtili={footer.linkUtili} // [{label: 'Privacy', url:'/privacy'}]
+          linkServizi={footer.linkServizi} // [{label:'STAMPA 3D', url:'/stampa-3d'}]
+        />
       </footer>
-    </div>
+    </ClientScrollWrapper>
   );
 }
