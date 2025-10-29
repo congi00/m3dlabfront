@@ -11,7 +11,7 @@ const nextConfig = {
           },
           {
             protocol: "https",
-            hostname: "tuodominio-strapi.it", // per produzione
+            hostname: "https://api.3dmlab.it", // per produzione
             pathname: "/uploads/**",
           },
         ],
