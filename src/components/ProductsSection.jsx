@@ -18,19 +18,19 @@ const ProductsSection = ({
       id: 1,
       title: stampa_text,
       image: stampa_image.url,
-      url: "http://localhost:3000/servizi/stampa-3d",
+      url: "/servizi/stampa-3d",
     },
     {
       id: 2,
       title: lavorazioni_text,
       image: incisioni_image?.url,
-      url: "http://localhost:3000/servizi/lavorazioni-cnc",
+      url: "/servizi/lavorazioni-cnc",
     },
     {
       id: 3,
       title: incisioni_text,
       image: lavorazioni_image?.url,
-      url: "http://localhost:3000/servizi/lavorazioni-laser",
+      url: "/servizi/lavorazioni-laser",
     },
   ];
 
@@ -76,7 +76,7 @@ const AnimatedBox = ({ product, index }) => {
       <motion.div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url(http://localhost:1337${product.image})`,
+          backgroundImage: `url(${product.image})`,
         }}
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.1 }}
