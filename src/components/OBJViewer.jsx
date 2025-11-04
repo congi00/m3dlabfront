@@ -68,7 +68,7 @@ export default function OBJViewer({ modelUrl, logo }) {
     }
   }, [loaded]);
 
-  const logoUrl = logo?.url ? `http://127.0.0.1:1337${logo.url}` : null;
+  const logoUrl = logo?.url ? `https://m3dlab.onrender.com${logo.url}` : null;
 
   return (
     <div className="relative w-full h-[500px] overflow-visible">

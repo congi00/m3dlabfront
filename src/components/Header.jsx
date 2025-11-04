@@ -35,7 +35,7 @@ export default function Header({ data }) {
             src={
               logo.url.startsWith("http")
                 ? logo.url
-                : `http://127.0.0.1:1337${logo.url}`
+                : `https://m3dlab.onrender.com${logo.url}`
             }
             alt="Logo"
             onClick={(e) => handleClick(e, "/")}
