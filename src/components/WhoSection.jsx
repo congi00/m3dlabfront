@@ -61,7 +61,7 @@ const WhoSection = ({ title, description, images = [] }) => {
                 transition={{ duration: 0.4 }}
               >
                 <img
-                  src={`http://localhost:1337${img.url}`}
+                  src={`https://m3dlab.onrender.com${img.url}`}
                   alt={img.alternativeText || "Chi siamo"}
                   className="object-cover w-full h-full"
                 />
