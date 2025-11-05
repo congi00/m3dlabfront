@@ -22,7 +22,7 @@ const HomePreventiveSection = ({
   for (let i = 0; i < items.length; i += 2) {
     rows.push(items.slice(i, i + 2));
   }
-  const modelUrl = `https://m3dlab.onrender.com${renderImage.url}`;
+  const modelUrl = `https://m3dlab-production.up.railway.app/${renderImage.url}`;
 
   const fadeUp = {
     hidden: { opacity: 0, y: 15 },

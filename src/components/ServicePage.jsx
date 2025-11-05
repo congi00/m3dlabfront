@@ -161,12 +161,12 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                           className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video"
                           onClick={() => openModalAt(secIdx, groupIndex, 0)}
                         >
-                          {currentGroup[0] && <img src={`https://m3dlab.onrender.com${currentGroup[0].url}`} alt={currentGroup[0].alternativeText || ""} className="object-cover w-full h-full"/>}
+                          {currentGroup[0] && <img src={`https://m3dlab-production.up.railway.app/${currentGroup[0].url}`} alt={currentGroup[0].alternativeText || ""} className="object-cover w-full h-full"/>}
                         </div>
                         <div className="grid gap-4">
                           {currentGroup.slice(1, 3).map((img, idx) => (
                             <div key={idx} className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[3/2]" onClick={() => openModalAt(secIdx, groupIndex, idx+1)}>
-                              <img src={`https://m3dlab.onrender.com${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
+                              <img src={`https://m3dlab-production.up.railway.app/${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
                             </div>
                           ))}
                         </div>
@@ -178,12 +178,12 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                         <div className="grid gap-4">
                           {currentGroup.slice(0,2).map((img, idx) => (
                             <div key={idx} className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[3/2]" onClick={() => openModalAt(secIdx, groupIndex, idx)}>
-                              <img src={`https://m3dlab.onrender.com${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
+                              <img src={`https://m3dlab-production.up.railway.app/${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
                             </div>
                           ))}
                         </div>
                         <div className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video" onClick={() => openModalAt(secIdx, groupIndex, 2)}>
-                          {currentGroup[2] && <img src={`https://m3dlab.onrender.com${currentGroup[2].url}`} alt={currentGroup[2].alternativeText || ""} className="object-cover w-full h-full"/>}
+                          {currentGroup[2] && <img src={`https://m3dlab-production.up.railway.app/${currentGroup[2].url}`} alt={currentGroup[2].alternativeText || ""} className="object-cover w-full h-full"/>}
                         </div>
                       </div>
                     )}
@@ -191,12 +191,12 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                     {layout === "top-large" && (
                       <div className="grid gap-4">
                         <div className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[16/9]" onClick={() => openModalAt(secIdx, groupIndex, 0)}>
-                          {currentGroup[0] && <img src={`https://m3dlab.onrender.com${currentGroup[0].url}`} alt={currentGroup[0].alternativeText || ""} className="object-cover w-full h-full"/>}
+                          {currentGroup[0] && <img src={`https://m3dlab-production.up.railway.app/${currentGroup[0].url}`} alt={currentGroup[0].alternativeText || ""} className="object-cover w-full h-full"/>}
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {currentGroup.slice(1,3).map((img, idx) => (
                             <div key={idx} className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[4/3]" onClick={() => openModalAt(secIdx, groupIndex, idx+1)}>
-                              <img src={`https://m3dlab.onrender.com${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
+                              <img src={`https://m3dlab-production.up.railway.app/${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
                             </div>
                           ))}
                         </div>
@@ -207,7 +207,7 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                         {currentGroup.map((img, idx) => (
                           <div key={idx} className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[4/3]" onClick={() => openModalAt(secIdx, groupIndex, idx)}>
-                            <img src={`https://m3dlab.onrender.com${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
+                            <img src={`https://m3dlab-production.up.railway.app/${img.url}`} alt={img.alternativeText || ""} className="object-cover w-full h-full"/>
                           </div>
                         ))}
                       </div>
@@ -239,7 +239,7 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                 <button onClick={modalPrev} className="absolute left-2 md:left-4 z-20 p-3 rounded-full bg-white/10 text-white hover:bg-white/20">
                   <ChevronLeftSVG/>
                 </button>
-                <img src={`https://m3dlab.onrender.com${(images[modal.section] || [])[modal.index]?.url}`} alt={(images[modal.section] || [])[modal.index]?.alternativeText || ""} className="max-h-[80vh] object-contain mx-auto"/>
+                <img src={`https://m3dlab-production.up.railway.app/${(images[modal.section] || [])[modal.index]?.url}`} alt={(images[modal.section] || [])[modal.index]?.alternativeText || ""} className="max-h-[80vh] object-contain mx-auto"/>
                 <button onClick={modalNext} className="absolute right-2 md:right-4 z-20 p-3 rounded-full bg-white/10 text-white hover:bg-white/20">
                   <ChevronRightSVG/>
                 </button>

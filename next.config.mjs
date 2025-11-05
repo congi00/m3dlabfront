@@ -5,7 +5,7 @@ const nextConfig = {
         remotePatterns: [
           {
             protocol: "https",
-            hostname: "m3dlab.onrender.com", // per produzione
+            hostname: "m3dlab-production.up.railway.app/", // per produzione
             pathname: "/uploads/**",
           },
         ],
