@@ -68,7 +68,7 @@ export default function OBJViewer({ modelUrl, logo }) {
     }
   }, [loaded]);
 
-  const logoUrl = logo?.url ? `https://m3dlab-production./${logo.url}` : null;
+  const logoUrl = logo?.url ? `https://m3dlab-production.up.railway.app${logo.url}` : null;
 
   return (
     <div className="relative w-full h-[500px] overflow-visible">
