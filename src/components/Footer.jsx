@@ -43,7 +43,7 @@ const Footer = ({
         <div className="flex flex-col gap-4">
           {logo && (
             <img
-              src={`https://m3dlab-production.up.railway.app/${logo.url}`}
+              src={`https://m3dlab-production.up.railway.app${logo.url}`}
               alt={logo.alternativeText || "Logo"}
               className="w-64 object-contain"
             />

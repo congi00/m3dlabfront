@@ -35,7 +35,7 @@ export default function Header({ data }) {
             src={
               logo.url.startsWith("http")
                 ? logo.url
-                : `https://m3dlab-production.up.railway.app/${logo.url}`
+                : `https://m3dlab-production.up.railway.app${logo.url}`
             }
             alt="Logo"
             onClick={(e) => handleClick(e, "/")}
