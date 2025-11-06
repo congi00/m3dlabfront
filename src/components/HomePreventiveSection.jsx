@@ -34,10 +34,10 @@ const HomePreventiveSection = ({
       {/* OBJViewer solo su mobile/tablet come sfondo */}
       <div className="absolute inset-0 -z-10 md:hidden overflow-visible">
         <OBJViewer modelUrl={modelUrl} logo={logo} />
-        <div className="absolute inset-0 bg-black/20 backdrop-blur-md pb-8" />
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-md" />
       </div>
 
-      <div className="mt-8 md:mt-0 container mx-auto flex flex-col md:flex-row gap-8 relative z-10">
+      <div className="mt-8 md:mt-0 container mx-auto flex flex-col md:flex-row gap-8 relative z-10 pb-8 md:pb-0">
         <div className="md:w-1/2 space-y-4 pt-24 text-center md:text-left">
           <motion.h2
             className="text-4xl md:text-5xl font-bold px-3 md:px-0"
