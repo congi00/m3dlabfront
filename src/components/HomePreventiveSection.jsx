@@ -114,8 +114,8 @@ const HomePreventiveSection = ({
         </div>
 
         {/* OBJViewer invariato per desktop */}
-        <div className="md:w-1/2 rounded-lg shadow-lg">
-          <OBJViewer modelUrl={modelUrl} logo={logo}/>
+        <div className="hidden md:block md:w-1/2 rounded-lg shadow-lg">
+          <OBJViewer modelUrl={modelUrl} logo={logo} />
         </div>
       </div>
     </section>
