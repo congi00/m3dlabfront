@@ -47,9 +47,9 @@ export default function Header({ data }) {
             transition={{ duration: 0.3 }}
           >
             {menuOpen ? (
-              <X size={28} className="text-[#8AAEAE]" />   
+              <X size={28} className="text-[#8AAEAE]" />
             ) : (
-              <Menu size={28} className="text-[#8AAEAE]" /> 
+              <Menu size={28} className="text-[#8AAEAE]" />
             )}
           </motion.div>
         </button>
@@ -133,10 +133,12 @@ export default function Header({ data }) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * (HeaderItems?.length || 1) }}
-                className="flex justify-center mt-2"
+                className="flex justify-center w-full"
               >
-                <div className="flex justify-center items-center">
-                  <LanguageToggle initialLanguage={lang} />
+                <div className="flex justify-center items-center w-full">
+                  <div className="flex justify-center items-center mx-auto">
+                    <LanguageToggle initialLanguage={lang} />
+                  </div>
                 </div>
               </motion.li>
             </ul>
