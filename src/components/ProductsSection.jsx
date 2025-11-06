@@ -101,7 +101,7 @@ const AnimatedBox = ({ product }) => {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 flex items-end justify-center p-6 hover:from-black/50 hover:to-black/10 transition-all duration-300">
         <h3 className="text-white text-3xl font-bold text-center drop-shadow-2xl">
-          {product.title.toUpperCase()}
+          {product.title?.toUpperCase()}
         </h3>
       </div>
     </motion.div>
