@@ -76,7 +76,7 @@ const AnimatedBox = ({ product, index }) => {
       <motion.div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url(${product.image})`,
+          backgroundImage: `url(https://m3dlab-production.up.railway.app${product.image})`,
         }}
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.1 }}
