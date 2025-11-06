@@ -41,6 +41,14 @@ const ProductsSection = ({
     },
   ];
 
+  console.log("ProductsSection props:", {
+    cad_text,
+    cad_image,
+    stampa_image,
+    incisioni_image,
+    lavorazioni_image,
+  });
+
   return (
     <section
       className="bg-cover bg-center bg-no-repeat relative pt-8 pb-8 pl-1 pr-1"
