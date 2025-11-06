@@ -24,20 +24,6 @@ const serviziData = {
         { url: "/uploads/stampa3d_4.jpg" },
       ],
     },
-    {
-      title: "Scansione 3D",
-      text: `La scansione 3D consente di acquisire con precisione la geometria di un oggetto reale e trasformarla in un modello digitale.\n È uno strumento indispensabile per reverse engineering, controllo dimensionale e riproduzione fedele di componenti esistenti.\n
-    Servizi offerti:
-    - Digitalizzazione di oggetti e componenti con elevata accuratezza.
-    - Creazione di modelli 3D pronti per stampa, modifica o analisi.
-    - Supporto a restauri, repliche e adattamenti di parti difficilmente reperibili.`,
-      images: [
-        { url: "/uploads/stampa3d_1.jpg" },
-        { url: "/uploads/stampa3d_2.jpg" },
-        { url: "/uploads/stampa3d_3.jpg" },
-        { url: "/uploads/stampa3d_4.jpg" },
-      ],
-    },
   ],
   "lavorazioni-cnc": [
     {
@@ -45,20 +31,6 @@ const serviziData = {
       text: `La fresatura CNC consente la realizzazione di pezzi precisi e ripetitivi, partendo da blocchi di materiale grezzo.\n È la soluzione ideale per prototipi meccanici, componenti funzionali e produzioni personalizzate.\n
     Tecnologia disponibile:
     - Lavorazioni su 3 assi – permettono di ottenere componenti accurati in diversi materiali (alluminio, plastica, legno, ecc.), garantendo solidità e affidabilità anche nei dettagli più complessi.`,
-      images: [
-        { url: "/uploads/cnc_1.jpg" },
-        { url: "/uploads/cnc_2.jpg" },
-        { url: "/uploads/cnc_3.jpg" },
-        { url: "/uploads/cnc_4.jpg" },
-      ],
-    },
-    {
-      title: "Disegno CAD",
-      text: `Il disegno CAD è il punto di partenza di ogni progetto. \nGrazie alla competenza su diversi software di modellazione 3D, realizziamo file precisi e pronti per la produzione, garantendo compatibilità con le tecnologie di fabbricazione digitale.\n
-      Servizi offerti:
-      - Modellazione 3D di prototipi, parti meccaniche e oggetti di design.
-      - Conversione di idee, schizzi o progetti in file digitali pronti alla lavorazione.
-      - Ottimizzazione di modelli per stampa 3D, CNC e laser.`,
       images: [
         { url: "/uploads/cnc_1.jpg" },
         { url: "/uploads/cnc_2.jpg" },
@@ -78,6 +50,35 @@ const serviziData = {
         { url: "/uploads/laser_1.jpg" },
         { url: "/uploads/laser_2.jpg" },
         { url: "/uploads/laser_3.jpg" },
+      ],
+    },
+  ],
+  "cad": [
+    {
+      title: "Disegno CAD",
+      text: `Il disegno CAD è il punto di partenza di ogni progetto. \nGrazie alla competenza su diversi software di modellazione 3D, realizziamo file precisi e pronti per la produzione, garantendo compatibilità con le tecnologie di fabbricazione digitale.\n
+      Servizi offerti:
+      - Modellazione 3D di prototipi, parti meccaniche e oggetti di design.
+      - Conversione di idee, schizzi o progetti in file digitali pronti alla lavorazione.
+      - Ottimizzazione di modelli per stampa 3D, CNC e laser.`,
+      images: [
+        { url: "/uploads/cnc_1.jpg" },
+        { url: "/uploads/cnc_2.jpg" },
+        { url: "/uploads/cnc_3.jpg" },
+        { url: "/uploads/cnc_4.jpg" },
+      ],
+    },{
+      title: "Scansione 3D",
+      text: `La scansione 3D consente di acquisire con precisione la geometria di un oggetto reale e trasformarla in un modello digitale.\n È uno strumento indispensabile per reverse engineering, controllo dimensionale e riproduzione fedele di componenti esistenti.\n
+    Servizi offerti:
+    - Digitalizzazione di oggetti e componenti con elevata accuratezza.
+    - Creazione di modelli 3D pronti per stampa, modifica o analisi.
+    - Supporto a restauri, repliche e adattamenti di parti difficilmente reperibili.`,
+      images: [
+        { url: "/uploads/stampa3d_1.jpg" },
+        { url: "/uploads/stampa3d_2.jpg" },
+        { url: "/uploads/stampa3d_3.jpg" },
+        { url: "/uploads/stampa3d_4.jpg" },
       ],
     },
   ],

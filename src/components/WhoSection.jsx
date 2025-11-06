@@ -1,15 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const WhoSection = ({ title, description, images = [] }) => {
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+
   // Hook per animazioni on scroll
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
+
+  // Controlla se è mobile/tablet
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileOrTablet(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Varianti d’animazione
   const textVariants = {
@@ -27,21 +39,25 @@ const WhoSection = ({ title, description, images = [] }) => {
       className="relative py-24 overflow-hidden"
       style={{ marginTop: "20px" }}
     >
-      <div id="chi-siamo" style={{position:"relative", bottom:"200px"}}></div>
+      <div id="chi-siamo" style={{ position: "relative", bottom: "200px" }}></div>
+
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-8 pt-0">
         {/* Testo */}
         <motion.div
           ref={ref}
-          className="md:w-1/2 pr-20"
+          className="md:w-1/2 pr-3 pl-3 md:pr-20 md:pl-0"
+          style={
+            isMobileOrTablet
+              ? { textAlign: "center", margin: "0 auto" }
+              : {}
+          }
           variants={textVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h2 className="text-5xl font-bold mb-6">{title.toUpperCase()}</h2>
-          <p className="text-lg leading-relaxed">
-            {description}
-          </p>
+          <p className="text-lg leading-relaxed">{description}</p>
         </motion.div>
 
         {/* Galleria immagini */}
@@ -74,7 +90,6 @@ const WhoSection = ({ title, description, images = [] }) => {
           )}
         </motion.div>
       </div>
-
     </section>
   );
 };

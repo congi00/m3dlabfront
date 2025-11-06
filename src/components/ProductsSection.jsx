@@ -1,14 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Divider from "./Divider";
 
 const ProductsSection = ({
   stampa_image,
   incisioni_image,
   lavorazioni_image,
+  cad_text,
+  cad_image,
   stampa_text,
   lavorazioni_text,
   incisioni_text,
@@ -32,14 +33,20 @@ const ProductsSection = ({
       image: lavorazioni_image?.url,
       url: "/servizi/lavorazioni-laser",
     },
+    {
+      id: 4,
+      title: cad_text,
+      image: cad_image?.url,
+      url: "/servizi/cad",
+    },
   ];
 
   return (
     <section
-      className="bg-cover bg-center bg-no-repeat relative pt-8 pb-16"
-      style={{ marginTop: "20px" }}
+      className="bg-cover bg-center bg-no-repeat relative pt-8 pb-8 pl-1 pr-1"
+      style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}
     >
-      <div className="container mx-auto flex flex-col md:flex-row gap-6 justify-center">
+      <div className="container mx-auto md:ml-5 md:mr-5 flex flex-col md:flex-row gap-[1rem] justify-center">
         {products.map((product, index) => (
           <AnimatedBox key={product.id} product={product} index={index} />
         ))}
@@ -48,12 +55,20 @@ const ProductsSection = ({
   );
 };
 
-// Componente per il singolo box animato con hover effect
-const AnimatedBox = ({ product, index }) => {
+const AnimatedBox = ({ product }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
+
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkWidth = () => setIsDesktop(window.innerWidth >= 768); // 768px = breakpoint "md"
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
 
   const variants = {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
@@ -63,16 +78,18 @@ const AnimatedBox = ({ product, index }) => {
   return (
     <motion.div
       ref={ref}
-      className="relative w-full md:w-1/3 rounded-lg overflow-hidden shadow-lg cursor-pointer"
+      className="relative w-full rounded-lg overflow-hidden shadow-lg cursor-pointer"
       variants={variants}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       transition={{ duration: 0.8, ease: "easeOut" }}
       whileHover={{ scale: 1.05 }}
-      style={{ height: "600px" }}
+      style={{
+        height: "600px",
+        ...(isDesktop && { width: "48%", minWidth: "25%" }), // ✅ solo desktop/tablet
+      }}
       onClick={() => window.open(product.url)}
     >
-      {/* Sfondo immagine con zoom on hover */}
       <motion.div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -82,7 +99,6 @@ const AnimatedBox = ({ product, index }) => {
         transition={{ duration: 0.1 }}
       />
 
-      {/* Overlay scuro leggermente sfumato verso il basso */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 flex items-end justify-center p-6 hover:from-black/50 hover:to-black/10 transition-all duration-300">
         <h3 className="text-white text-3xl font-bold text-center drop-shadow-2xl">
           {product.title.toUpperCase()}
