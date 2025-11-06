@@ -31,27 +31,27 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="relative mt-16 overflow-hidden">
+    <section className="relative mt-32 overflow-hidden">
       {/* OBJViewer come sfondo (solo mobile/tablet) */}
       <div className="absolute inset-0 -z-10 md:static md:z-auto md:w-1/2 md:h-auto">
         <div className="w-full h-full">
           <OBJViewer modelUrl={modelUrl} logo={logo} />
         </div>
 
-        {/* overlay per leggibilità del testo */}
+        {/* overlay leggera per migliorare leggibilità testo */}
         <div className="absolute inset-0 bg-black/40 md:hidden" />
       </div>
 
       <div className="container mx-auto flex flex-col md:flex-row gap-8 relative z-10">
         <div
           className="
-            md:w-1/2 space-y-4 pt-16
+            md:w-1/2 space-y-4 pt-24 
             text-center md:text-left
             flex flex-col justify-center
           "
         >
           <motion.h2
-            className="text-3xl md:text-4xl font-bold px-4 md:px-0"
+            className="text-5xl font-bold"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -62,7 +62,7 @@ const HomePreventiveSection = ({
           </motion.h2>
 
           <motion.p
-            className="text-white font-light text-lg md:text-xl pb-4 px-4 md:px-0"
+            className="text-white font-light text-xl pb-4"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -87,7 +87,7 @@ const HomePreventiveSection = ({
           </motion.div>
 
           <motion.h3
-            className="text-xl md:text-2xl font-light mt-2 pb-5 pt-6"
+            className="text-2xl font-light mt-6 pb-5 pt-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -97,11 +97,11 @@ const HomePreventiveSection = ({
             {String(secondTitle).toUpperCase()}
           </motion.h3>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
             {rows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:text-left text-center"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:text-left text-center"
               >
                 {row.map((item, colIndex) => (
                   <motion.div
