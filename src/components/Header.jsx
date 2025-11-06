@@ -30,12 +30,33 @@ export default function Header({ data }) {
       className="fixed top-0 left-0 h-28 w-full z-50 flex items-center justify-between py-4 shadow-md px-6 md:px-10"
       style={{ backgroundColor: "#000000E0" }}
     >
-      {/* ICONA MENU (solo mobile/tablet) */}
+      {/* LOGO (desktop: sinistra / mobile: centrato) */}
+      <div
+        className="
+          flex items-center gap-2 pb-3
+          absolute left-1/2 -translate-x-1/2 md:static md:transform-none
+        "
+      >
+        {logo?.url && (
+          <img
+            src={
+              logo.url.startsWith("http")
+                ? logo.url
+                : `https://m3dlab-production.up.railway.app${logo.url}`
+            }
+            alt="Logo"
+            onClick={(e) => handleClick(e, "/")}
+            className="w-[180px] sm:w-[200px] md:w-[240px] lg:w-[300px] h-auto object-contain transition-transform duration-300 hover:scale-105 cursor-pointer"
+          />
+        )}
+      </div>
+
+      {/* MENU ICONA (solo mobile/tablet) */}
       <div className="flex md:hidden items-center z-50">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="relative w-10 h-10 flex items-center justify-center focus:outline-none bg-transparent"
-          style={{ borderRadius: "15px", background: "transparent" }}
+          style={{ borderRadius: "15px" }}
         >
           <motion.div
             initial={false}
@@ -55,24 +76,8 @@ export default function Header({ data }) {
         </button>
       </div>
 
-      {/* LOGO — centrato anche su mobile */}
-      <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-auto z-40">
-        {logo?.url && (
-          <img
-            src={
-              logo.url.startsWith("http")
-                ? logo.url
-                : `https://m3dlab-production.up.railway.app${logo.url}`
-            }
-            alt="Logo"
-            onClick={(e) => handleClick(e, "/")}
-            className="w-[180px] h-auto sm:w-[200px] md:w-[240px] lg:w-[300px] object-contain transition-transform duration-300 hover:scale-105 cursor-pointer"
-          />
-        )}
-      </div>
-
-      {/* NAV + LANGUAGE (desktop) */}
-      <div className="hidden md:flex mr-10 items-center gap-10">
+      {/* NAV + LANGUAGE (solo desktop) */}
+      <div className="hidden md:flex items-center gap-10 ml-auto">
         <nav>
           <ul className="flex gap-8">
             {HeaderItems?.map((item, idx) => (
@@ -123,14 +128,14 @@ export default function Header({ data }) {
                 </motion.li>
               ))}
 
-              {/* LANGUAGE TOGGLE nel menu mobile — centrato perfettamente */}
+              {/* LANGUAGE TOGGLE nel menu mobile — perfettamente centrato */}
               <motion.li
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * (HeaderItems?.length || 1) }}
-                className="flex justify-center w-full"
+                className="flex justify-center w-full mt-4"
               >
-                <div className="flex justify-center items-center w-full">
+                <div className="flex justify-center items-center">
                   <LanguageToggle initialLanguage={lang} />
                 </div>
               </motion.li>
