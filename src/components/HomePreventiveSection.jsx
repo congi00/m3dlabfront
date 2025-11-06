@@ -30,24 +30,22 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="relative mt-20 md:mt-32 overflow-hidden">
-      {/* OBJViewer come sfondo (solo mobile/tablet) */}
-      <div className="absolute inset-0 -z-10 md:static md:z-auto">
+    <section className="mt-32 relative overflow-hidden">
+      {/* OBJViewer solo su mobile/tablet come sfondo */}
+      <div className="absolute inset-0 -z-10 md:hidden">
         <OBJViewer modelUrl={modelUrl} logo={logo} />
-
-        {/* effetto vetro + oscuramento solo mobile/tablet */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-md md:hidden" />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-md" />
       </div>
 
       <div className="container mx-auto flex flex-col md:flex-row gap-8 relative z-10">
-        <div className="md:w-1/2 space-y-4 pt-12 md:pt-24 text-center md:text-left">
+        <div className="md:w-1/2 space-y-4 pt-24 text-center md:text-left">
           <motion.h2
             className="text-4xl md:text-5xl font-bold px-3 md:px-0"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             {String(title).toUpperCase()}
           </motion.h2>
@@ -58,7 +56,7 @@ const HomePreventiveSection = ({
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
           >
             {subtitle}
           </motion.p>
@@ -67,7 +65,7 @@ const HomePreventiveSection = ({
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
           >
             <Link href="/quote">
               <button className="px-6 py-3 text-white rounded-lg transition">
@@ -82,7 +80,7 @@ const HomePreventiveSection = ({
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
           >
             {String(secondTitle).toUpperCase()}
           </motion.h3>
@@ -104,7 +102,7 @@ const HomePreventiveSection = ({
                     transition={{
                       duration: 0.4,
                       delay: 0.35 + colIndex * 0.05,
-                      ease: 'easeOut',
+                      ease: "easeOut",
                     }}
                   >
                     <span className="mr-2"></span> {item}
@@ -115,9 +113,9 @@ const HomePreventiveSection = ({
           </div>
         </div>
 
-        {/* OBJViewer visibile solo su desktop come prima */}
+        {/* OBJViewer invariato per desktop */}
         <div className="hidden md:block md:w-1/2 rounded-lg shadow-lg">
-          <OBJViewer modelUrl={modelUrl} logo={logo}/>
+          <OBJViewer modelUrl={modelUrl} logo={logo} />
         </div>
       </div>
     </section>
