@@ -22,7 +22,6 @@ const HomePreventiveSection = ({
   for (let i = 0; i < items.length; i += 2) {
     rows.push(items.slice(i, i + 2));
   }
-
   const modelUrl = `https://m3dlab-production.up.railway.app${renderImage.url}`;
 
   const fadeUp = {
@@ -31,32 +30,16 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="relative mt-32 overflow-hidden">
-      {/* OBJViewer come sfondo (solo mobile/tablet) */}
-      <div className="absolute inset-0 -z-10 md:static md:z-auto md:w-1/2 md:h-auto">
-        <div className="w-full h-full">
-          <OBJViewer modelUrl={modelUrl} logo={logo} />
-        </div>
-
-        {/* overlay leggera per migliorare leggibilità testo */}
-        <div className="absolute inset-0 bg-black/40 md:hidden" />
-      </div>
-
-      <div className="container mx-auto flex flex-col md:flex-row gap-8 relative z-10">
-        <div
-          className="
-            md:w-1/2 space-y-4 pt-24 
-            text-center md:text-left
-            flex flex-col justify-center
-          "
-        >
+    <section className="mt-32">
+      <div className="container mx-auto flex flex-col md:flex-row gap-8">
+        <div className="md:w-1/2 space-y-4 pt-24">
           <motion.h2
             className="text-5xl font-bold"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             {String(title).toUpperCase()}
           </motion.h2>
@@ -67,7 +50,7 @@ const HomePreventiveSection = ({
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
           >
             {subtitle}
           </motion.p>
@@ -76,11 +59,10 @@ const HomePreventiveSection = ({
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
-            className="flex justify-center md:justify-start"
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
           >
             <Link href="/quote">
-              <button className="px-6 py-3 text-white rounded-lg transition bg-[#8AAEAE] hover:bg-[#769999]">
+              <button className="px-6 py-3 text-white rounded-lg transition">
                 {buttonText}
               </button>
             </Link>
@@ -92,7 +74,7 @@ const HomePreventiveSection = ({
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
           >
             {String(secondTitle).toUpperCase()}
           </motion.h3>
@@ -101,12 +83,12 @@ const HomePreventiveSection = ({
             {rows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:text-left text-center"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
               >
                 {row.map((item, colIndex) => (
                   <motion.div
                     key={colIndex}
-                    className="flex text-white justify-center md:justify-start"
+                    className="flex text-white"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.2 }}
@@ -114,20 +96,18 @@ const HomePreventiveSection = ({
                     transition={{
                       duration: 0.4,
                       delay: 0.35 + colIndex * 0.05,
-                      ease: 'easeOut',
+                      ease: "easeOut",
                     }}
                   >
-                    {item}
+                    <span className="mr-2"></span> {item}
                   </motion.div>
                 ))}
               </div>
             ))}
           </div>
         </div>
-
-        {/* OBJViewer — visibile a destra solo su desktop */}
-        <div className="hidden md:block md:w-1/2 rounded-lg shadow-lg">
-          <OBJViewer modelUrl={modelUrl} logo={logo} />
+        <div className="md:w-1/2 rounded-lg shadow-lg">
+          <OBJViewer modelUrl={modelUrl} logo={logo}/>
         </div>
       </div>
     </section>
