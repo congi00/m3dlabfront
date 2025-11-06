@@ -34,7 +34,8 @@ export default function Header({ data }) {
       <div className="flex md:hidden items-center">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="relative w-10 h-10 flex items-center justify-center focus:outline-none"
+          className="relative w-10 h-10 flex items-center justify-center focus:outline-none bg-transparent"
+          style={{ borderRadius: "15px", background: "transparent" }}
         >
           <motion.div
             initial={false}
@@ -54,8 +55,8 @@ export default function Header({ data }) {
         </button>
       </div>
 
-      {/* LOGO */}
-      <div className="flex items-center gap-2 pb-3">
+      {/* LOGO — sempre centrato */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 pb-3">
         {logo?.url && (
           <img
             src={
@@ -95,11 +96,6 @@ export default function Header({ data }) {
         <LanguageToggle initialLanguage={lang} />
       </div>
 
-      {/* LANGUAGE SOLO MOBILE */}
-      <div className="flex md:hidden">
-        <LanguageToggle initialLanguage={lang} />
-      </div>
-
       {/* MENU MOBILE ANIMATO */}
       <AnimatePresence>
         {menuOpen && (
@@ -131,6 +127,15 @@ export default function Header({ data }) {
                   </a>
                 </motion.li>
               ))}
+
+              {/* LANGUAGE TOGGLE nel menu mobile */}
+              <motion.li
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * (HeaderItems?.length || 1) }}
+              >
+                <LanguageToggle initialLanguage={lang} />
+              </motion.li>
             </ul>
           </motion.div>
         )}
