@@ -17,7 +17,11 @@ export default function LanguageToggle({ initialLanguage = false }) {
   return (
     <button
       onClick={() => setIsEnglish(!isEnglish)}
-      className="relative flex items-center self-start -mt-1 w-20 h-9 ml-20 bg-[#90AFB2] rounded-full transition-all duration-300 focus:outline-none"
+      className="
+        relative flex items-center self-start -mt-1 w-20 h-9
+        bg-[#90AFB2] rounded-full transition-all duration-300 focus:outline-none
+        ml-0 md:ml-20
+      "
     >
       <div
         className={`absolute top-0.5 left-0.5 w-[calc(50%-0.25rem)] h-[calc(100%-0.25rem)] bg-white rounded-full shadow-md transform transition-transform duration-300 ${
