@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const placeholders = [
@@ -12,7 +11,7 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
     { icon: "/placeholder3.png", text: option3 },
   ];
 
-  // Cambia selezione ogni 3 secondi
+  // Cambia selezione ogni 8 secondi
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % placeholders.length);
@@ -27,7 +26,7 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
         marginTop: "200px",
         backgroundImage: `url(https://m3dlab-production.up.railway.app${bg_image_section.url})`,
         height: "675px",
-        zIndex: "-1"
+        zIndex: "-1",
       }}
     >
       <div className="container mx-auto h-full relative flex flex-col md:flex-row">
@@ -42,11 +41,20 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
                 key={index}
                 src={item.icon}
                 alt={`Icon ${index + 1}`}
-                className="w-12 h-12 rounded-full border-2 border-gray-400 cursor-pointer"
+                className="rounded-full cursor-pointer"
                 onClick={() => setActiveIndex(index)}
                 animate={{ scale: activeIndex === index ? 1.2 : 1 }}
                 whileHover={{ scale: 1.2 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                style={{
+                  width: "150px", // 3x rispetto ai precedenti 50px (w-12 = 48px)
+                  height: "150px",
+                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.25), inset 0 4px 8px rgba(255,255,255,0.2)",
+                  border: "none", // rimuove il bordo
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  transformStyle: "preserve-3d",
+                }}
               />
             ))}
           </div>
@@ -60,14 +68,14 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
               exit={{ opacity: 0, y: -20, scale: 0.95, rotate: 2 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
               className="text-white text-right text-lg font-bold mt-4"
-              style={{width: "400px"}}
+              style={{ width: "400px" }}
             >
               {placeholders[activeIndex].text}
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
-      <div id="services" style={{position: "relative", bottom:"200px"}}></div>
+      <div id="services" style={{ position: "relative", bottom: "200px" }}></div>
     </section>
   );
 };
