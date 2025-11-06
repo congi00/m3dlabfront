@@ -30,7 +30,7 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="mt-32 relative overflow-hidden">
+    <section className="mt-16 md:mt-32 relative overflow-hidden">
       {/* OBJViewer solo su mobile/tablet come sfondo */}
       <div className="absolute inset-0 -z-10 md:hidden">
         <OBJViewer modelUrl={modelUrl} logo={logo} />
