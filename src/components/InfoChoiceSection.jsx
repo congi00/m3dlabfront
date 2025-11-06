@@ -1,80 +1,78 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 
 const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const placeholders = [
     { icon: "/placeholder1.png", text: option1 },
     { icon: "/placeholder2.png", text: option2 },
     { icon: "/placeholder3.png", text: option3 },
   ];
 
-  // Cambia selezione ogni 8 secondi
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % placeholders.length);
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section
-      className="bg-cover bg-center bg-no-repeat relative"
+      className="bg-cover bg-center bg-no-repeat relative mb-8"
       style={{
-        marginTop: "200px",
+        marginTop: "50px",
         backgroundImage: `url(https://m3dlab-production.up.railway.app${bg_image_section.url})`,
         height: "675px",
         zIndex: "-1",
+        backgroundPositionY: "-50px"
       }}
     >
-      <div className="container mx-auto h-full relative flex flex-col md:flex-row">
-        <div className="md:w-1/2"></div>
-
-        {/* DIV in alto a destra */}
-        <div className="absolute top-8 right-8 flex flex-col items-end gap-4">
-          {/* Icone allineate orizzontalmente */}
-          <div className="flex gap-6 items-center">
-            {placeholders.map((item, index) => (
+      <div className="container mx-auto h-full relative flex flex-col md:flex-row justify-end">
+        {/* CONTENITORE ICONE + TESTI */}
+        <motion.div
+          className="absolute top-8 right-8 flex flex-col md:flex-row gap-10 md:gap-20"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          {placeholders.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center text-center md:items-center md:text-center gap-4"
+            >
+              {/* Icona animata */}
               <motion.img
-                key={index}
                 src={item.icon}
                 alt={`Icon ${index + 1}`}
-                className="rounded-full cursor-pointer"
-                onClick={() => setActiveIndex(index)}
-                animate={{ scale: activeIndex === index ? 1.2 : 1 }}
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="rounded-full"
+                whileHover={{
+                  scale: 1.2,
+                  rotateY: 15,
+                  boxShadow:
+                    "0px 0px 20px rgba(138, 174, 174, 0.8), 0px 0px 30px rgba(138, 174, 174, 0.4)",
+                }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
                 style={{
-                  width: "150px", // 3x rispetto ai precedenti 50px (w-12 = 48px)
-                  height: "150px",
-                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.25), inset 0 4px 8px rgba(255,255,255,0.2)",
-                  border: "none", // rimuove il bordo
-                  borderRadius: "50%",
+                  width: "80px",
+                  height: "80px",
+                  border: "none",
                   objectFit: "cover",
                   transformStyle: "preserve-3d",
+                  cursor: "pointer",
                 }}
               />
-            ))}
-          </div>
 
-          {/* Testo sotto tutte le icone */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={placeholders[activeIndex].text}
-              initial={{ opacity: 0, y: 20, scale: 0.95, rotate: -2 }}
-              animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95, rotate: 2 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="text-white text-right text-lg font-bold mt-4"
-              style={{ width: "400px" }}
-            >
-              {placeholders[activeIndex].text}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+              {/* Testo sotto icona */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 * index }}
+                viewport={{ once: true }}
+                className="text-white text-base md:text-lg font-bold leading-snug"
+                style={{ maxWidth: "300px" }}
+              >
+                {item.text}
+              </motion.div>
+            </div>
+          ))}
+        </motion.div>
       </div>
+
+      {/* Anchor per sezione successiva */}
       <div id="services" style={{ position: "relative", bottom: "200px" }}></div>
     </section>
   );
