@@ -30,9 +30,9 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="mt-16 md:mt-32 relative overflow-hidden pb-8 md:pb-16">
+    <section className="mt-16 md:mt-32 relative overflow-visible pb-8 md:pb-16">
       {/* OBJViewer solo su mobile/tablet come sfondo */}
-      <div className="absolute inset-0 -z-10 md:hidden">
+      <div className="absolute inset-0 -z-10 md:hidden overflow-visible">
         <OBJViewer modelUrl={modelUrl} logo={logo} />
         <div className="absolute inset-0 bg-black/20 backdrop-blur-md" />
       </div>
@@ -114,7 +114,7 @@ const HomePreventiveSection = ({
         </div>
 
         {/* OBJViewer invariato per desktop */}
-        <div className="hidden overflow-hidden md:block md:w-1/2 rounded-lg shadow-lg">
+        <div className="hidden overflow-visible md:block md:w-1/2 rounded-lg shadow-lg">
           <OBJViewer modelUrl={modelUrl} logo={logo} />
         </div>
       </div>
