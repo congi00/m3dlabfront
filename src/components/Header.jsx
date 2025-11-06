@@ -31,7 +31,7 @@ export default function Header({ data }) {
       style={{ backgroundColor: "#000000E0" }}
     >
       {/* ICONA MENU (solo mobile/tablet) */}
-      <div className="flex md:hidden items-center">
+      <div className="flex md:hidden items-center z-50">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="relative w-10 h-10 flex items-center justify-center focus:outline-none bg-transparent"
@@ -55,8 +55,8 @@ export default function Header({ data }) {
         </button>
       </div>
 
-      {/* LOGO — sempre centrato */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 pb-3">
+      {/* LOGO — centrato anche su mobile */}
+      <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-auto z-40">
         {logo?.url && (
           <img
             src={
@@ -66,12 +66,7 @@ export default function Header({ data }) {
             }
             alt="Logo"
             onClick={(e) => handleClick(e, "/")}
-            className="w-[180px] h-auto
-              sm:w-[200px]
-              md:w-[240px]
-              lg:w-[300px]
-              object-contain
-              transition-transform duration-300 hover:scale-105 cursor-pointer"
+            className="w-[180px] h-auto sm:w-[200px] md:w-[240px] lg:w-[300px] object-contain transition-transform duration-300 hover:scale-105 cursor-pointer"
           />
         )}
       </div>
@@ -128,7 +123,7 @@ export default function Header({ data }) {
                 </motion.li>
               ))}
 
-              {/* LANGUAGE TOGGLE nel menu mobile — centrato */}
+              {/* LANGUAGE TOGGLE nel menu mobile — centrato perfettamente */}
               <motion.li
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -136,9 +131,7 @@ export default function Header({ data }) {
                 className="flex justify-center w-full"
               >
                 <div className="flex justify-center items-center w-full">
-                  <div className="flex justify-center items-center mx-auto">
-                    <LanguageToggle initialLanguage={lang} />
-                  </div>
+                  <LanguageToggle initialLanguage={lang} />
                 </div>
               </motion.li>
             </ul>
