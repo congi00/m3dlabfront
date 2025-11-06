@@ -30,27 +30,27 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="mt-32">
+    <section className="mt-20 md:mt-32">
       <div className="container mx-auto flex flex-col md:flex-row gap-8">
-        <div className="md:w-1/2 space-y-4 pt-24">
+        <div className="md:w-1/2 space-y-4 pt-12 md:pt-24 text-center md:text-left">
           <motion.h2
-            className="text-5xl font-bold"
+            className="text-4xl md:text-5xl font-bold px-3 md:px-0"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
           >
             {String(title).toUpperCase()}
           </motion.h2>
 
           <motion.p
-            className="text-white font-light text-xl pb-4"
+            className="text-white font-light text-lg md:text-xl pb-4 px-3 md:px-0"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
           >
             {subtitle}
           </motion.p>
@@ -59,7 +59,7 @@ const HomePreventiveSection = ({
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
           >
             <Link href="/quote">
               <button className="px-6 py-3 text-white rounded-lg transition">
@@ -69,26 +69,26 @@ const HomePreventiveSection = ({
           </motion.div>
 
           <motion.h3
-            className="text-2xl font-light mt-6 pb-5 pt-12"
+            className="text-2xl font-light mt-4 md:mt-6 pb-5 pt-8 md:pt-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeUp}
-            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
           >
             {String(secondTitle).toUpperCase()}
           </motion.h3>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2 md:gap-4">
             {rows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 justify-center md:justify-start"
               >
                 {row.map((item, colIndex) => (
                   <motion.div
                     key={colIndex}
-                    className="flex text-white"
+                    className="flex text-white justify-center md:justify-start"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.2 }}
@@ -96,7 +96,7 @@ const HomePreventiveSection = ({
                     transition={{
                       duration: 0.4,
                       delay: 0.35 + colIndex * 0.05,
-                      ease: "easeOut",
+                      ease: 'easeOut',
                     }}
                   >
                     <span className="mr-2"></span> {item}
@@ -106,6 +106,7 @@ const HomePreventiveSection = ({
             ))}
           </div>
         </div>
+
         <div className="md:w-1/2 rounded-lg shadow-lg">
           <OBJViewer modelUrl={modelUrl} logo={logo}/>
         </div>
