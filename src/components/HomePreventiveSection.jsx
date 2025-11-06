@@ -31,27 +31,27 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="relative mt-32 overflow-hidden">
+    <section className="relative mt-16 overflow-hidden">
       {/* OBJViewer come sfondo (solo mobile/tablet) */}
       <div className="absolute inset-0 -z-10 md:static md:z-auto md:w-1/2 md:h-auto">
         <div className="w-full h-full">
           <OBJViewer modelUrl={modelUrl} logo={logo} />
         </div>
 
-        {/* overlay leggera per migliorare leggibilità testo */}
+        {/* overlay per leggibilità del testo */}
         <div className="absolute inset-0 bg-black/40 md:hidden" />
       </div>
 
       <div className="container mx-auto flex flex-col md:flex-row gap-8 relative z-10">
         <div
           className="
-            md:w-1/2 space-y-4 pt-24 
+            md:w-1/2 space-y-4 pt-16
             text-center md:text-left
             flex flex-col justify-center
           "
         >
           <motion.h2
-            className="text-5xl font-bold"
+            className="text-3xl md:text-4xl font-bold"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -62,7 +62,7 @@ const HomePreventiveSection = ({
           </motion.h2>
 
           <motion.p
-            className="text-white font-light text-xl pb-4"
+            className="text-white font-light text-lg md:text-xl pb-4"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -87,7 +87,7 @@ const HomePreventiveSection = ({
           </motion.div>
 
           <motion.h3
-            className="text-2xl font-light mt-6 pb-5 pt-12"
+            className="text-xl md:text-2xl font-light mt-6 pb-5 pt-10"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
