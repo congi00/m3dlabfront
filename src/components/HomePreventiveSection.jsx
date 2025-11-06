@@ -51,7 +51,7 @@ const HomePreventiveSection = ({
           "
         >
           <motion.h2
-            className="text-3xl md:text-4xl font-bold"
+            className="text-3xl md:text-4xl font-bold px-4 md:px-0"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -62,7 +62,7 @@ const HomePreventiveSection = ({
           </motion.h2>
 
           <motion.p
-            className="text-white font-light text-lg md:text-xl pb-4"
+            className="text-white font-light text-lg md:text-xl pb-4 px-4 md:px-0"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -87,7 +87,7 @@ const HomePreventiveSection = ({
           </motion.div>
 
           <motion.h3
-            className="text-xl md:text-2xl font-light mt-6 pb-5 pt-10"
+            className="text-xl md:text-2xl font-light mt-2 pb-5 pt-6"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -97,11 +97,11 @@ const HomePreventiveSection = ({
             {String(secondTitle).toUpperCase()}
           </motion.h3>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             {rows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:text-left text-center"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:text-left text-center"
               >
                 {row.map((item, colIndex) => (
                   <motion.div
