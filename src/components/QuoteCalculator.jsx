@@ -156,7 +156,7 @@ const QuoteCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center px-6 py-12 mt-16 backdrop-blur-xl bg-transparent">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center px-1 md:px-6 py-12 mt-16 backdrop-blur-xl bg-transparent">
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
           <div className="bg-black text-white p-8 rounded-xl shadow-2xl max-w-md text-center space-y-4 border border-white/20">
