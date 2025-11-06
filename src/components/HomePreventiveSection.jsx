@@ -51,7 +51,7 @@ const HomePreventiveSection = ({
           </motion.h2>
 
           <motion.p
-            className="text-white font-light text-lg md:text-xl pb-4 px-3 md:px-0"
+            className="mt-8 md:mt-0 text-white font-light text-lg md:text-xl pb-4 px-3 md:px-0"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
