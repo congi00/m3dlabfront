@@ -47,9 +47,9 @@ export default function Header({ data }) {
             transition={{ duration: 0.3 }}
           >
             {menuOpen ? (
-              <X size={28} className="text-white" />
+              <X size={28} className="text-[#8AAEAE]" />   
             ) : (
-              <Menu size={28} className="text-white" />
+              <Menu size={28} className="text-[#8AAEAE]" /> 
             )}
           </motion.div>
         </button>
@@ -123,18 +123,21 @@ export default function Header({ data }) {
                     className="relative group"
                   >
                     {item.Label}
-                    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#8AAEAE] transition-all duration-300 group-hover:w-full"></span>
                   </a>
                 </motion.li>
               ))}
 
-              {/* LANGUAGE TOGGLE nel menu mobile */}
+              {/* LANGUAGE TOGGLE nel menu mobile — centrato */}
               <motion.li
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * (HeaderItems?.length || 1) }}
+                className="flex justify-center mt-2"
               >
-                <LanguageToggle initialLanguage={lang} />
+                <div className="flex justify-center items-center">
+                  <LanguageToggle initialLanguage={lang} />
+                </div>
               </motion.li>
             </ul>
           </motion.div>
