@@ -27,8 +27,8 @@ export default function Header({ data }) {
 
   return (
     <header
-      className="fixed top-0 left-0 h-28 w-full z-50 flex items-center justify-between py-4 shadow-md px-6 md:px-10"
-      style={{ backgroundColor: "#000000E0" }}
+      className="fixed top-0 left-0 h-28 w-full z-50 flex items-center justify-between py-4 shadow-md px-6 md:px-10 backdrop-blur-md"
+      // style={{ backgroundColor: "#000000E0" }}
     >
       {/* LOGO (desktop: sinistra / mobile: centrato) */}
       <div
