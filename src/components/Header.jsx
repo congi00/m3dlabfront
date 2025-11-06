@@ -1,19 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import LanguageToggle from "./LanguageToggle";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 export default function Header({ data }) {
   if (!data) return null;
 
   const { logo, language, HeaderItems } = data;
   const lang = language ? "IT" : "EN";
-  const pathname = usePathname(); 
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleClick = (e, url) => {
     if (url === "/" || url === "/#") {
       e.preventDefault();
-
       if (pathname === "/") {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
@@ -23,11 +26,34 @@ export default function Header({ data }) {
   };
 
   return (
-    <header 
-      className="fixed top-0 left-0 h-28 w-full z-50 flex items-center justify-between py-4 shadow-md"
-      style={{backgroundColor: "#000000E0"}}
+    <header
+      className="fixed top-0 left-0 h-28 w-full z-50 flex items-center justify-between py-4 shadow-md px-6 md:px-10"
+      style={{ backgroundColor: "#000000E0" }}
     >
-      
+      {/* ICONA MENU (solo mobile/tablet) */}
+      <div className="flex md:hidden items-center">
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="relative w-10 h-10 flex items-center justify-center focus:outline-none"
+        >
+          <motion.div
+            initial={false}
+            animate={menuOpen ? "open" : "closed"}
+            variants={{
+              open: { rotate: 180 },
+              closed: { rotate: 0 },
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            {menuOpen ? (
+              <X size={28} className="text-white" />
+            ) : (
+              <Menu size={28} className="text-white" />
+            )}
+          </motion.div>
+        </button>
+      </div>
+
       {/* LOGO */}
       <div className="flex items-center gap-2 pb-3">
         {logo?.url && (
@@ -44,27 +70,71 @@ export default function Header({ data }) {
               md:w-[240px]
               lg:w-[300px]
               object-contain
-              transition-transform duration-300 hover:scale-105"
+              transition-transform duration-300 hover:scale-105 cursor-pointer"
           />
         )}
       </div>
 
-      <div className="flex mr-10">
-        {/* NAV MENU */}
+      {/* NAV + LANGUAGE (desktop) */}
+      <div className="hidden md:flex mr-10 items-center gap-10">
         <nav>
           <ul className="flex gap-8">
             {HeaderItems?.map((item, idx) => (
               <li key={idx}>
-                <a href={item.Url} className="transition-colors text-xl" onClick={(e) => handleClick(e, item.Url)}>
+                <a
+                  href={item.Url}
+                  className="transition-colors text-xl"
+                  onClick={(e) => handleClick(e, item.Url)}
+                >
                   {item.Label}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
-
         <LanguageToggle initialLanguage={lang} />
       </div>
+
+      {/* LANGUAGE SOLO MOBILE */}
+      <div className="flex md:hidden">
+        <LanguageToggle initialLanguage={lang} />
+      </div>
+
+      {/* MENU MOBILE ANIMATO */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-28 left-0 w-full bg-[#000000F2] backdrop-blur-xl border-t border-gray-700 md:hidden"
+          >
+            <ul className="flex flex-col items-center gap-6 py-8 text-lg font-medium text-white">
+              {HeaderItems?.map((item, idx) => (
+                <motion.li
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 * idx }}
+                >
+                  <a
+                    href={item.Url}
+                    onClick={(e) => {
+                      handleClick(e, item.Url);
+                      setMenuOpen(false);
+                    }}
+                    className="relative group"
+                  >
+                    {item.Label}
+                    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
