@@ -30,8 +30,16 @@ const HomePreventiveSection = ({
   };
 
   return (
-    <section className="mt-20 md:mt-32">
-      <div className="container mx-auto flex flex-col md:flex-row gap-8">
+    <section className="relative mt-20 md:mt-32 overflow-hidden">
+      {/* OBJViewer come sfondo (solo mobile/tablet) */}
+      <div className="absolute inset-0 -z-10 md:static md:z-auto">
+        <OBJViewer modelUrl={modelUrl} logo={logo} />
+
+        {/* effetto vetro + oscuramento solo mobile/tablet */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-md md:hidden" />
+      </div>
+
+      <div className="container mx-auto flex flex-col md:flex-row gap-8 relative z-10">
         <div className="md:w-1/2 space-y-4 pt-12 md:pt-24 text-center md:text-left">
           <motion.h2
             className="text-4xl md:text-5xl font-bold px-3 md:px-0"
@@ -107,7 +115,8 @@ const HomePreventiveSection = ({
           </div>
         </div>
 
-        <div className="md:w-1/2 rounded-lg shadow-lg">
+        {/* OBJViewer visibile solo su desktop come prima */}
+        <div className="hidden md:block md:w-1/2 rounded-lg shadow-lg">
           <OBJViewer modelUrl={modelUrl} logo={logo}/>
         </div>
       </div>
