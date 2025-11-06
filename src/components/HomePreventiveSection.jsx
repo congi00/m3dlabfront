@@ -34,7 +34,7 @@ const HomePreventiveSection = ({
       {/* OBJViewer solo su mobile/tablet come sfondo */}
       <div className="absolute inset-0 -z-10 md:hidden">
         <OBJViewer modelUrl={modelUrl} logo={logo} />
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-md" />
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-md" />
       </div>
 
       <div className="container mx-auto flex flex-col md:flex-row gap-8 relative z-10">
