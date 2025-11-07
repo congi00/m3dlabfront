@@ -1,62 +1,27 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const LAYOUTS = ["large-left", "large-right", "top-large", "grid"];
 
 const ChevronLeftSVG = ({ className = "" }) => (
-  <svg
-    className={className}
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
-    <path
-      d="M15 18L9 12L15 6"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+  <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const ChevronRightSVG = ({ className = "" }) => (
-  <svg
-    className={className}
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
-    <path
-      d="M9 6L15 12L9 18"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+  <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const CloseXSVG = ({ className = "" }) => (
-  <svg
-    className={className}
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
-    <path
-      d="M18 6L6 18M6 6l12 12"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+  <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -64,30 +29,20 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
   const [indices, setIndices] = useState(titles.map(() => 0));
   const [layouts, setLayouts] = useState(titles.map(() => LAYOUTS[0]));
   const [modal, setModal] = useState({ open: false, section: null, index: 0 });
-  const [direction, setDirection] = useState(1); // 1 = avanti, -1 = indietro
+  const [direction, setDirection] = useState(1);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.18 });
+  const [groupSize, setGroupSize] = useState(3);
 
-  // Random layout solo al primo render client
   useEffect(() => {
-    setLayouts(
-      titles.map(() => LAYOUTS[Math.floor(Math.random() * LAYOUTS.length)])
-    );
+    setLayouts(titles.map(() => LAYOUTS[Math.floor(Math.random() * LAYOUTS.length)]));
   }, [titles]);
-
-  const [groupSize, setGroupSize] = useState(3); // default desktop
 
   useEffect(() => {
     const updateGroupSize = () => {
-      if (window.innerWidth < 1024) {
-        setGroupSize(1); // mobile/tablet
-      } else {
-        setGroupSize(3); // desktop
-      }
+      setGroupSize(window.innerWidth < 1024 ? 1 : 3);
     };
-
-    updateGroupSize(); // iniziale
+    updateGroupSize();
     window.addEventListener("resize", updateGroupSize);
-
     return () => window.removeEventListener("resize", updateGroupSize);
   }, []);
 
@@ -103,20 +58,14 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
     const groups = groupSectionImages(images[secIdx] || []);
     if (groups.length <= 1) return;
     setDirection(1);
-    setIndices((prev) =>
-      prev.map((v, i) => (i === secIdx ? (v + 1) % groups.length : v))
-    );
+    setIndices((prev) => prev.map((v, i) => (i === secIdx ? (v + 1) % groups.length : v)));
   };
 
   const prevSlide = (secIdx) => {
     const groups = groupSectionImages(images[secIdx] || []);
     if (groups.length <= 1) return;
     setDirection(-1);
-    setIndices((prev) =>
-      prev.map((v, i) =>
-        i === secIdx ? (v === 0 ? groups.length - 1 : v - 1) : v
-      )
-    );
+    setIndices((prev) => prev.map((v, i) => (i === secIdx ? (v === 0 ? groups.length - 1 : v - 1) : v)));
   };
 
   const openModalAt = (secIdx, groupIdx, imgIdx) => {
@@ -142,7 +91,6 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
     setModal((m) => ({ ...m, index: (m.index + 1) % total }));
   };
 
-  // Keyboard navigation
   useEffect(() => {
     const onKey = (e) => {
       if (!modal.open) return;
@@ -154,10 +102,7 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [modal.open, modal.section, modal.index]);
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
+  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
   return (
     <section className="relative px-2 md:px-16 pt-40" ref={ref}>
@@ -185,10 +130,7 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                     {title.toUpperCase()}
                   </h2>
                   {texts[secIdx] && (
-                    <p
-                      style={{ color: "#fff", whiteSpace: "pre-line" }}
-                      className="mt-3 max-w-3xl"
-                    >
+                    <p style={{ color: "#fff", whiteSpace: "pre-line" }} className="mt-3 max-w-3xl">
                       {texts[secIdx]}
                     </p>
                   )}
@@ -227,126 +169,25 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                     transition={{ duration: 0.45 }}
                     className="w-full"
                   >
-                    {/* Render layout */}
-                    {layout === "large-left" && (
-                      <div className="grid gap-4 grid-cols-1 md:grid-cols-[1.6fr_1fr]">
+                    {/* Layout rendering */}
+                    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                      {currentGroup.map((img, idx) => (
                         <div
-                          className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video"
-                          onClick={() => openModalAt(secIdx, groupIndex, 0)}
+                          key={idx}
+                          className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[4/3]"
+                          onClick={() => openModalAt(secIdx, groupIndex, idx)}
                         >
-                          {currentGroup[0] && (
-                            <img
-                              src={`https://m3dlab-production.up.railway.app${currentGroup[0].url}`}
-                              alt={currentGroup[0].alternativeText || ""}
-                              className="object-cover w-full h-full"
-                            />
-                          )}
+                          <Image
+                            src={`https://m3dlab-production.up.railway.app${img.url}`}
+                            alt={img.alternativeText || ""}
+                            fill
+                            loading="lazy"
+                            quality={70}
+                            className="object-cover"
+                          />
                         </div>
-                        <div className="grid gap-4">
-                          {currentGroup.slice(1, 3).map((img, idx) => (
-                            <div
-                              key={idx}
-                              className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[3/2]"
-                              onClick={() =>
-                                openModalAt(secIdx, groupIndex, idx + 1)
-                              }
-                            >
-                              <img
-                                src={`https://m3dlab-production.up.railway.app${img.url}`}
-                                alt={img.alternativeText || ""}
-                                className="object-cover w-full h-full"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {layout === "large-right" && (
-                      <div className="grid gap-4 grid-cols-1 md:grid-cols-[1fr_1.6fr]">
-                        <div className="grid gap-4">
-                          {currentGroup.slice(0, 2).map((img, idx) => (
-                            <div
-                              key={idx}
-                              className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[3/2]"
-                              onClick={() =>
-                                openModalAt(secIdx, groupIndex, idx)
-                              }
-                            >
-                              <img
-                                src={`https://m3dlab-production.up.railway.app${img.url}`}
-                                alt={img.alternativeText || ""}
-                                className="object-cover w-full h-full"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                        <div
-                          className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video"
-                          onClick={() => openModalAt(secIdx, groupIndex, 2)}
-                        >
-                          {currentGroup[2] && (
-                            <img
-                              src={`https://m3dlab-production.up.railway.app${currentGroup[2].url}`}
-                              alt={currentGroup[2].alternativeText || ""}
-                              className="object-cover w-full h-full"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {layout === "top-large" && (
-                      <div className="grid gap-4">
-                        <div
-                          className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[16/9]"
-                          onClick={() => openModalAt(secIdx, groupIndex, 0)}
-                        >
-                          {currentGroup[0] && (
-                            <img
-                              src={`https://m3dlab-production.up.railway.app${currentGroup[0].url}`}
-                              alt={currentGroup[0].alternativeText || ""}
-                              className="object-cover w-full h-full"
-                            />
-                          )}
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {currentGroup.slice(1, 3).map((img, idx) => (
-                            <div
-                              key={idx}
-                              className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[4/3]"
-                              onClick={() =>
-                                openModalAt(secIdx, groupIndex, idx + 1)
-                              }
-                            >
-                              <img
-                                src={`https://m3dlab-production.up.railway.app${img.url}`}
-                                alt={img.alternativeText || ""}
-                                className="object-cover w-full h-full"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {layout === "grid" && (
-                      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                        {currentGroup.map((img, idx) => (
-                          <div
-                            key={idx}
-                            className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-[4/3]"
-                            onClick={() => openModalAt(secIdx, groupIndex, idx)}
-                          >
-                            <img
-                              src={`https://m3dlab-production.up.railway.app${img.url}`}
-                              alt={img.alternativeText || ""}
-                              className="object-cover w-full h-full"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                      ))}
+                    </div>
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -366,10 +207,7 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
             className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/85"
             onClick={closeModal}
           >
-            <div
-              className="relative max-w-[1200px] w-full max-h-[90vh] mx-4 md:mx-8"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="relative max-w-[1200px] w-full max-h-[90vh] mx-4 md:mx-8" onClick={(e) => e.stopPropagation()}>
               <button
                 onClick={closeModal}
                 className="fixed right-2 top-2 md:right-4 md:top-4 z-30 p-2 rounded-full border border-white/60 text-white bg-black/30 hover:bg-black/50"
@@ -383,16 +221,16 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                 >
                   <ChevronLeftSVG />
                 </button>
-                <img
-                  src={`https://m3dlab-production.up.railway.app${
-                    (images[modal.section] || [])[modal.index]?.url
-                  }`}
-                  alt={
-                    (images[modal.section] || [])[modal.index]
-                      ?.alternativeText || ""
-                  }
+
+                <Image
+                  src={`https://m3dlab-production.up.railway.app${(images[modal.section] || [])[modal.index]?.url}`}
+                  alt={(images[modal.section] || [])[modal.index]?.alternativeText || ""}
+                  width={1000}
+                  height={800}
+                  quality={80}
                   className="max-h-[80vh] object-contain mx-auto"
                 />
+
                 <button
                   onClick={modalNext}
                   className="absolute right-2 md:right-4 z-20 p-3 rounded-full bg-white/10 text-white hover:bg-white/20"
