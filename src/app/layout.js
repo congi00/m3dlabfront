@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "3dmlab",
+  title: "3DMLAB",
   description: "Sito di stampa 3D e incisioni laser",
 };
 

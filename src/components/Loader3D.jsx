@@ -89,50 +89,6 @@ export default function Loader3D({ logoUrl, progress }) {
         />
       )}
 
-      {/* 🧱 Barra di stampa 3D */}
-      <div className="relative w-72 h-4 rounded-full overflow-hidden border border-[#2a2a2a] z-10 shadow-[0_0_30px_rgba(138,174,174,0.3)] bg-transparent">
-        {/* Strato stampato con gradient animato */}
-        <motion.div
-          className="absolute bottom-0 left-0 h-full rounded-full"
-          style={{
-            background: "linear-gradient(90deg, #4B6E6E, #A4C7C7, #8AAEAE)",
-            boxShadow:
-              "0 0 30px rgba(138,174,174,0.6), inset 0 0 15px rgba(255,255,255,0.1)",
-            backgroundSize: "200% 100%",
-          }}
-          initial={{ width: "0%" }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        />
-
-        {/* Animazione scorrimento glow */}
-        <motion.div
-          className="absolute h-full w-full rounded-full"
-          style={{
-            mixBlendMode: "screen",
-          }}
-          animate={{ backgroundPosition: ["-200% 0%", "200% 0%"] }}
-          transition={{
-            duration: 1.8,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-
-        {/* Testina di stampa 3D */}
-        <motion.div
-          className="absolute top-0 h-[2px] bg-[#CFEAEA] shadow-[0_0_10px_#8AAEAE]"
-          initial={{ left: "0%" }}
-          animate={{
-            left: ["0%", "90%", "0%"],
-          }}
-          transition={{
-            duration: 1.4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </div>
     </div>
   );
 }
