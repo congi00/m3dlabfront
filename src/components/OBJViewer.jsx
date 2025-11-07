@@ -5,12 +5,13 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import * as THREE from "three";
+import Loader3D from "./Loader3D"; // 👈 nuovo import
 
 function RotatingModel({ url, onLoaded }) {
   const obj = useLoader(OBJLoader, url);
   const ref = useRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (obj) {
       const box = new THREE.Box3().setFromObject(obj);
       const center = new THREE.Vector3();
@@ -58,7 +59,7 @@ export default function OBJViewer({ modelUrl, logo }) {
     };
   }, [loaded]);
 
-  // Simula progressione della barra
+  // Simula progressione barra
   useEffect(() => {
     if (!loaded) {
       const interval = setInterval(() => {
@@ -68,29 +69,13 @@ export default function OBJViewer({ modelUrl, logo }) {
     }
   }, [loaded]);
 
-  const logoUrl = logo?.url ? `https://m3dlab-production.up.railway.app${logo.url}` : null;
+  const logoUrl = logo?.url
+    ? `https://m3dlab-production.up.railway.app${logo.url}`
+    : null;
 
   return (
     <div className="relative w-full h-[500px] overflow-visible">
-      {/* Loader full screen */}
-      {!loaded && logoUrl && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
-          <div className="relative w-64 h-64 flex items-center justify-center">
-            <img
-              src={logoUrl}
-              alt="Logo"
-              className="w-full h-full object-contain"
-            />
-            <div
-              className="absolute top-0 left-0 h-full bg-black"
-              style={{
-                width: `${100 - progress}%`,
-                transition: "width 0.2s linear",
-              }}
-            />
-          </div>
-        </div>
-      )}
+      {!loaded && <Loader3D logoUrl={logoUrl} progress={progress} />}
 
       <Canvas
         style={{
