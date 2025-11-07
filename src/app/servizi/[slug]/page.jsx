@@ -59,7 +59,7 @@ export default async function ServiceSlugPage({ params }) {
     ],
     "cad": [
       {
-        title: "Disegno CAD",
+        title: "Modellazione CAD",
         text: `Il disegno CAD è il punto di partenza di ogni progetto. \nGrazie alla competenza su diversi software di modellazione 3D, realizziamo file precisi e pronti per la produzione, garantendo compatibilità con le tecnologie di fabbricazione digitale.\n
         Servizi offerti:
         - Modellazione 3D di prototipi, parti meccaniche e oggetti di design.

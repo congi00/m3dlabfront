@@ -10,18 +10,11 @@
   font-display: swap;
 }
 
+/* ✅ Forziamo il tema dark sempre */
 :root {
-  --background: #ffffff;
-  --foreground: #;
+  --background: #000000;
+  --foreground: #ededed;
   --primary-color: #8AAEAE;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ededed;
-    --primary-color: #8AAEAE;
-  }
 }
 
 html,
@@ -36,17 +29,15 @@ html {
 
 body {
   @apply font-lustra;
-  color: var(--primary-color)
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button {
-  background-color: var(--primary-color)
-}
-
-body {
-  background: var(--background);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-color);
+  color: var(--background);
 }
 
 * {
@@ -60,8 +51,7 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* ✅ Forziamo sempre color-scheme dark anche per browser */
+html {
+  color-scheme: dark;
 }
