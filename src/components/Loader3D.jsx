@@ -5,11 +5,7 @@ import React from "react";
 
 export default function Loader3D({ logoUrl, progress }) {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
+    <div
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black overflow-hidden"
     >
       {/* 🔥 Effetto laser HD migliorato */}
@@ -20,7 +16,7 @@ export default function Loader3D({ logoUrl, progress }) {
           style={{
             background:
               "radial-gradient(circle at 50% 50%, rgba(138,174,174,0.25) 0%, transparent 70%)",
-            filter: "blur(60px)",
+            filter: "blur(50px)",
           }}
           animate={{
             opacity: [0.1, 0.25, 0.15],
@@ -33,7 +29,7 @@ export default function Loader3D({ logoUrl, progress }) {
           }}
         />
 
-        {/* Layer 2 – laser dinamico più brillante */}
+        {/* Layer 2 – laser dinamico più sottile e preciso */}
         <motion.div
           className="absolute inset-0"
           animate={{
@@ -46,9 +42,9 @@ export default function Loader3D({ logoUrl, progress }) {
           }}
           style={{
             backgroundImage:
-              "repeating-linear-gradient(90deg, transparent 0%, rgba(138,174,174,0.25) 43%, rgba(138,174,174,0.9) 50%, rgba(138,174,174,0.25) 57%, transparent 100%)",
+              "repeating-linear-gradient(90deg, transparent 0%, rgba(138,174,174,0.25) 47%, rgba(138,174,174,0.9) 49%, rgba(138,174,174,0.25) 51%, transparent 100%)",
             backgroundSize: "300% 100%",
-            filter: "blur(0.6px) brightness(1.4)",
+            filter: "blur(0.4px) brightness(1.5)",
             mixBlendMode: "screen",
           }}
         />
@@ -122,6 +118,6 @@ export default function Loader3D({ logoUrl, progress }) {
           }}
         />
       </div>
-    </motion.div>
+    </div>
   );
 }

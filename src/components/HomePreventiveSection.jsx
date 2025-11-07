@@ -4,6 +4,8 @@ import Image from "next/image";
 import OBJViewer from "./OBJViewer";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import Loader3D from "./Loader3D";
 
 const HomePreventiveSection = ({
   renderImage,
@@ -29,11 +31,14 @@ const HomePreventiveSection = ({
     visible: { opacity: 1, y: 0 },
   };
 
+  const [loaded, setLoaded] = useState(false);
+  const [progress, setProgress] = useState(0);
+
   return (
     <section className="mt-16 md:mt-32 relative overflow-visible pb-8 md:pb-16">
       {/* OBJViewer solo su mobile/tablet come sfondo */}
       <div className="absolute inset-0 -z-10 md:hidden overflow-visible">
-        <OBJViewer modelUrl={modelUrl} logo={logo} />
+        <OBJViewer modelUrl={modelUrl} logo={logo} setLoaded={setLoaded} loaded={loaded} progress={progress} setProgress={setProgress}/>
         <div className="absolute inset-0 bg-black/20 backdrop-blur-md" />
       </div>
 
@@ -115,9 +120,10 @@ const HomePreventiveSection = ({
 
         {/* OBJViewer invariato per desktop */}
         <div className="hidden overflow-visible md:block md:w-1/2 rounded-lg shadow-lg">
-          <OBJViewer modelUrl={modelUrl} logo={logo} />
+          <OBJViewer modelUrl={modelUrl} logo={logo} setLoaded={setLoaded} loaded={loaded} progress={progress} setProgress={setProgress} set/>
         </div>
       </div>
+      {!loaded && <Loader3D logoUrl={`https://m3dlab-production.up.railway.app${logo.url}`} progress={progress} />}
     </section>
   );
 };

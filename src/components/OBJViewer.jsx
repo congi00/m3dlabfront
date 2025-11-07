@@ -46,9 +46,7 @@ function RotatingModel({ url, onLoaded }) {
   );
 }
 
-export default function OBJViewer({ modelUrl, logo }) {
-  const [loaded, setLoaded] = useState(false);
-  const [progress, setProgress] = useState(0);
+export default function OBJViewer({ modelUrl, logo, setLoaded, loaded, progress , setProgress}) {
 
   // Blocca scroll durante il loading
   useEffect(() => {
