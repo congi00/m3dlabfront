@@ -1,39 +1,36 @@
-"use client";
-
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import React, { useState, useEffect } from "react";
 
-export default function TermsOfUsePage() {
-  const [homepage, setHomepage] = useState(null);
+export default async function TermsOfUsePage() {
+  const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
-  useEffect(() => {
-    const fetchHomepage = async () => {
-      const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-      const res = await fetch(
-        `${base}/api/homepage?populate[section][populate]=*`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-          },
-          cache: "no-store",
-        }
-      );
-      const json = await res.json();
-      setHomepage(json.data);
-    };
-    fetchHomepage();
-  }, []);
+  const res = await fetch(
+    `${base}/api/homepage?populate[section][populate]=*`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`, // server-side sicuro
+      },
+      cache: "no-store",
+    }
+  );
 
-  if (!homepage) return <div className="text-center py-24">Loading...</div>;
+  if (!res.ok) {
+    throw new Error(`Errore fetch homepage: ${res.status}`);
+  }
 
-  const header = homepage.section?.find((s) => s.__component === "shared.header");
-  const footer = homepage.section?.find((s) => s.__component === "shared.footer");
+  const { data: homepage } = await res.json();
+
+  const header = homepage.section?.find(
+    (s) => s.__component === "shared.header"
+  );
+  const footer = homepage.section?.find(
+    (s) => s.__component === "shared.footer"
+  );
 
   return (
     <>
       <Header data={header} />
-      <main className="max-w-4xl mx-auto px-6 py-24">
+      <main className="max-w-4xl mx-auto px-6 py-[10rem] pb-[13rem]">
         <h1 className="text-4xl font-bold mb-6">Termini d'Uso</h1>
         <p className="mb-4">
           L’uso di questo sito implica l’accettazione dei seguenti termini:

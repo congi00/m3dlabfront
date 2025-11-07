@@ -1,39 +1,36 @@
-"use client";
-
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import React, { useState, useEffect } from "react";
 
-export default function PrivacyPolicyPage() {
-  const [homepage, setHomepage] = useState(null);
+export default async function PrivacyPolicyPage() {
+  // Fetch server-side
+  const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+  const res = await fetch(
+    `${base}/api/homepage?populate[section][populate]=*`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`, // sicuro lato server
+      },
+      cache: "no-store",
+    }
+  );
 
-  useEffect(() => {
-    const fetchHomepage = async () => {
-      const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-      const res = await fetch(
-        `${base}/api/homepage?populate[section][populate]=*`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-          },
-          cache: "no-store",
-        }
-      );
-      const json = await res.json();
-      setHomepage(json.data);
-    };
-    fetchHomepage();
-  }, []);
+  if (!res.ok) {
+    throw new Error(`Errore fetch homepage: ${res.status}`);
+  }
 
-  if (!homepage) return <div className="text-center py-24">Loading...</div>;
+  const { data: homepage } = await res.json();
 
-  const header = homepage.section?.find((s) => s.__component === "shared.header");
-  const footer = homepage.section?.find((s) => s.__component === "shared.footer");
+  const header = homepage.section?.find(
+    (s) => s.__component === "shared.header"
+  );
+  const footer = homepage.section?.find(
+    (s) => s.__component === "shared.footer"
+  );
 
   return (
     <>
       <Header data={header} />
-      <main className="max-w-4xl mx-auto px-6 py-24">
+      <main className="max-w-4xl mx-auto px-6 py-[10rem] pb-[13rem]">
         <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
         <p className="mb-4">
           La presente informativa descrive come raccogliamo e utilizziamo i dati
