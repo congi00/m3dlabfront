@@ -39,6 +39,7 @@ export default async function HomePage() {
   const footer = homepage.section?.find(
     (s) => s.__component === "shared.footer"
   );
+  
 
   return (
     <ClientScrollWrapper>
