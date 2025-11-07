@@ -7,7 +7,7 @@ export default function Loader3D({ logoUrl, progress }) {
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black overflow-hidden"
-      style={{height: "110%"}}
+      style={{ height: "110%" }}
     >
       {/* 🔥 Effetto laser HD migliorato */}
       <div className="absolute inset-0 pointer-events-none">
@@ -75,10 +75,10 @@ export default function Loader3D({ logoUrl, progress }) {
         <motion.img
           src={logoUrl}
           alt="Logo"
-          className="w-40 h-40 object-contain mb-8 z-10"
+          className="w-60 h-60 object-contain mb-[-40px] z-10"
           initial={{ scale: 0.9, opacity: 0.7 }}
           animate={{
-            scale: [0.9, 1.05, 0.9],
+            scale: [0.9, 1.1, 0.9],
             opacity: [0.7, 1, 0.7],
           }}
           transition={{
@@ -90,19 +90,33 @@ export default function Loader3D({ logoUrl, progress }) {
       )}
 
       {/* 🧱 Barra di stampa 3D */}
-      <div className="relative w-64 h-3 bg-[#1a1a1a] rounded-full overflow-hidden border border-[#2a2a2a] z-10 shadow-[0_0_20px_rgba(138,174,174,0.2)]">
-        {/* Strato stampato */}
+      <div className="relative w-72 h-4 rounded-full overflow-hidden border border-[#2a2a2a] z-10 shadow-[0_0_30px_rgba(138,174,174,0.3)] bg-transparent">
+        {/* Strato stampato con gradient animato */}
         <motion.div
           className="absolute bottom-0 left-0 h-full rounded-full"
           style={{
-            background:
-              "linear-gradient(180deg, #A4C7C7 0%, #8AAEAE 40%, #4B6E6E 100%)",
+            background: "linear-gradient(90deg, #4B6E6E, #A4C7C7, #8AAEAE)",
             boxShadow:
-              "0 0 20px rgba(138,174,174,0.6), inset 0 0 10px rgba(255,255,255,0.08)",
+              "0 0 30px rgba(138,174,174,0.6), inset 0 0 15px rgba(255,255,255,0.1)",
+            backgroundSize: "200% 100%",
           }}
           initial={{ width: "0%" }}
           animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        />
+
+        {/* Animazione scorrimento glow */}
+        <motion.div
+          className="absolute h-full w-full rounded-full"
+          style={{
+            mixBlendMode: "screen",
+          }}
+          animate={{ backgroundPosition: ["-200% 0%", "200% 0%"] }}
+          transition={{
+            duration: 1.8,
+            repeat: Infinity,
+            ease: "linear",
+          }}
         />
 
         {/* Testina di stampa 3D */}
