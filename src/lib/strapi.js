@@ -38,7 +38,7 @@ async function createQuoteEntry(data, uploadedFile) {
       finish: data.finish,
       quantity: data.quantity,
       quote: data.quote,
-      fileName: data.fileName || (uploadedFile && uploadedFile.name) || null,
+      fileName: data.fileName || (uploadedFile && uploadedFile.name) || "",
     },
   };
 

@@ -17,13 +17,13 @@ export async function POST(req) {
     await createQuoteEntry(data, uploadedFile);
 
     const html = renderEmailHtml({
-      logoUrl: "https://tuodominio.it/logo.png", // Cambia con il tuo logo
+      logoUrl: "https://3dmlab.it/logo.png", // Cambia con il tuo logo
       email: data.email,
       service: data.service,
       material: data.material,
       finish: data.finish,
       quantity: data.quantity,
-      fileName: data.fileName || (uploadedFile && uploadedFile.name),
+      fileName: data.fileName || (uploadedFile && uploadedFile.name) || "",
       quote: data.quote,
     });
 
@@ -38,9 +38,9 @@ export async function POST(req) {
     
     await transporter.sendMail({
       from: "info3dmlab@gmail.com",
-      to: "info3dmlab@gmail.com", // 👈 ti arriva a te stesso
-      subject: `Nuovo preventivo da ${data.email}`, // mostra la mail dell’utente nel subject
-      html, // mantiene il template HTML con i dati
+      to: [data.email, "info3dmlab@gmail.com"],
+      subject: `Nuovo preventivo da ${data.email}`,
+      html,
     });
 
     return NextResponse.json({ success: true });
