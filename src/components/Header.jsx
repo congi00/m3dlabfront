@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LanguageToggle from "./LanguageToggle";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { LanguageContext } from "./LanguageContext";
 
 export default function Header({ data }) {
   if (!data) return null;
 
-  const { logo, language, HeaderItems } = data;
-  const lang = language ? "IT" : "EN";
+  const { logo, HeaderItems } = data;
+  const { language } = useContext(LanguageContext);
+  const lang = language ? "it" : "en";
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -87,7 +89,7 @@ export default function Header({ data }) {
                   className="transition-colors text-xl"
                   onClick={(e) => handleClick(e, item.Url)}
                 >
-                  {item.Label}
+                  {language === 'it' ? item.Label : item.en_Label}
                 </a>
               </li>
             ))}
@@ -122,7 +124,7 @@ export default function Header({ data }) {
                     }}
                     className="relative group"
                   >
-                    {item.Label}
+                    {language === 'it' ? item.Label : item.en_Label}
                     <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#8AAEAE] transition-all duration-300 group-hover:w-full"></span>
                   </a>
                 </motion.li>

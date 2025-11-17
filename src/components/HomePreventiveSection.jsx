@@ -4,8 +4,9 @@ import Image from "next/image";
 import OBJViewer from "./OBJViewer";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Loader3D from "./Loader3D";
+import { LanguageContext } from "./LanguageContext";
 
 const HomePreventiveSection = ({
   renderImage,
@@ -14,12 +15,26 @@ const HomePreventiveSection = ({
   buttonText,
   secondTitle,
   secondSubtitle,
+  en_title,
+  en_subtitle,
+  en_buttonText,
+  en_secondTitle,
+  en_secondSubtitle,
   logo,
 }) => {
-  const items = secondSubtitle
+  const { language } = useContext(LanguageContext);
+
+  const [loaded, setLoaded] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const items = language === 'it' ? secondSubtitle
+    .split("\n")
+    .map((item) => item.trim())
+    .filter((item) => item !== "") : en_secondSubtitle
     .split("\n")
     .map((item) => item.trim())
     .filter((item) => item !== "");
+    
   const rows = [];
   for (let i = 0; i < items.length; i += 2) {
     rows.push(items.slice(i, i + 2));
@@ -30,9 +45,6 @@ const HomePreventiveSection = ({
     hidden: { opacity: 0, y: 15 },
     visible: { opacity: 1, y: 0 },
   };
-
-  const [loaded, setLoaded] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   return (
     <section className="mt-16 md:mt-32 relative overflow-visible pb-8 md:pb-16">
@@ -52,7 +64,7 @@ const HomePreventiveSection = ({
             variants={fadeUp}
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
-            {String(title).toUpperCase()}
+            {String(language === 'it' ? title : en_title).toUpperCase()}
           </motion.h2>
 
           <motion.p
@@ -63,7 +75,7 @@ const HomePreventiveSection = ({
             variants={fadeUp}
             transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
           >
-            {subtitle}
+            {language === 'it' ? subtitle : en_subtitle}
           </motion.p>
 
           <motion.div
@@ -74,7 +86,7 @@ const HomePreventiveSection = ({
           >
             <Link href="/quote">
               <button className="px-6 py-3 text-white rounded-lg transition">
-                {buttonText}
+                {language === 'it' ? buttonText : en_buttonText}
               </button>
             </Link>
           </motion.div>
@@ -87,7 +99,7 @@ const HomePreventiveSection = ({
             variants={fadeUp}
             transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
           >
-            {String(secondTitle).toUpperCase()}
+            {String(language === 'it' ? secondTitle : en_secondTitle).toUpperCase()}
           </motion.h3>
 
           <div className="flex flex-col gap-2 md:gap-4">

@@ -2,6 +2,7 @@ import React from "react";
 import QuoteCalculator from "@/components/QuoteCalculator";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/components/LanguageContext";
 
 export default async function QuotePage() {
   const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
@@ -25,7 +26,7 @@ export default async function QuotePage() {
   );
 
   return (
-    <>
+    <LanguageProvider>
       <div className="min-h-screen p-8">
         <Header data={header} />
         <QuoteCalculator />
@@ -43,6 +44,6 @@ export default async function QuotePage() {
           linkServizi={footer.linkServizi} // [{label:'STAMPA 3D', url:'/stampa-3d'}]
         />
       </footer>
-    </>
+    </LanguageProvider>
   );
 }

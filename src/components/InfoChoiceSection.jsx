@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
+import { LanguageContext } from "./LanguageContext";
 
-const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
+const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_option1, en_option2, en_option3 }) => {
   const [bgPosY, setBgPosY] = useState("-50px"); // default desktop
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const { language } = useContext(LanguageContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,9 +22,9 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3 }) => {
   }, []);
 
   const placeholders = [
-    { icon: "/placeholder1.png", text: option1 },
-    { icon: "/placeholder2.png", text: option2 },
-    { icon: "/placeholder3.png", text: option3 },
+    { icon: "/placeholder1.png", text: language === 'it' ? option1 : en_option1 },
+    { icon: "/placeholder2.png", text: language === 'it' ? option2 : en_option2 },
+    { icon: "/placeholder3.png", text: language === 'it' ? option3 : en_option3 },
   ];
 
   // Varianti animazioni

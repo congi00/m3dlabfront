@@ -1,22 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { LanguageContext } from "./LanguageContext";
 
-export default function LanguageToggle({ initialLanguage = false }) {
-  const [isEnglish, setIsEnglish] = useState(initialLanguage);
+export default function LanguageToggle() {
+  const { language, setLanguage } = useContext(LanguageContext);
 
-  // opzionale: salvare in localStorage
-  useEffect(() => {
-    const savedLang = localStorage.getItem("language");
-    if (savedLang) setIsEnglish(savedLang === "en");
-  }, []);
+  // Legge da localStorage se necessario (già gestito dal context)
+  // Non serve più useState locale
 
-  useEffect(() => {
-    localStorage.setItem("language", isEnglish ? "en" : "it");
-  }, [isEnglish]);
+  const toggleLanguage = () => {
+    setLanguage(language === "it" ? "en" : "it");
+  };
 
   return (
     <button
-      onClick={() => setIsEnglish(!isEnglish)}
+      onClick={toggleLanguage}
       className="
         relative flex items-center self-start -mt-1 w-20 h-9
         bg-[#90AFB2] rounded-full transition-all duration-300 focus:outline-none
@@ -25,19 +23,21 @@ export default function LanguageToggle({ initialLanguage = false }) {
     >
       <div
         className={`absolute top-0.5 left-0.5 w-[calc(50%-0.25rem)] h-[calc(100%-0.25rem)] bg-white rounded-full shadow-md transform transition-transform duration-300 ${
-          isEnglish ? "translate-x-[calc(100%+0.25rem)]" : "translate-x-0"
+          language === "it"
+            ? "translate-x-[calc(100%+0.25rem)]"
+            : "translate-x-0"
         }`}
       />
       <span
         className={`flex-1 text-center font-bold text-sm transition-colors duration-300 ${
-          !isEnglish ? "text-[#ffffff]" : "text-[#ffffff]"
+          language === "en" ? "text-[#ffffff]" : "text-[#ffffff]"
         }`}
       >
         IT
       </span>
       <span
         className={`flex-1 text-center font-bold text-sm transition-colors duration-300 ${
-          isEnglish ? "text-[#90AFB2]" : "text-[#ffffff]"
+          language === "it" ? "text-[#90AFB2]" : "text-[#ffffff]"
         }`}
       >
         EN

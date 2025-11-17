@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { LanguageProvider } from "@/components/LanguageContext";
 
 // Server Component
 export default async function CookiePolicyPage() {
@@ -24,7 +25,7 @@ export default async function CookiePolicyPage() {
   const footer = homepage.section?.find((s) => s.__component === "shared.footer");
 
   return (
-    <>
+    <LanguageProvider>
       <Header data={header} />
       <main className="max-w-4xl mx-auto px-6 py-[10rem] pb-[17rem]">
         <h1 className="text-4xl font-bold mb-6">Cookie Policy</h1>
@@ -48,6 +49,6 @@ export default async function CookiePolicyPage() {
         linkUtili={footer.linkUtili}
         linkServizi={footer.linkServizi}
       />
-    </>
+    </LanguageProvider>
   );
 }

@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { LanguageContext } from "./LanguageContext";
 
-const WhoSection = ({ title, description, images = [] }) => {
+const WhoSection = ({ title, en_title, en_description, description, images = [] }) => {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const { language } = useContext(LanguageContext);
 
   // Hook per animazioni on scroll
   const [ref, inView] = useInView({
@@ -56,8 +58,8 @@ const WhoSection = ({ title, description, images = [] }) => {
           animate={inView ? "visible" : "hidden"}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 className="text-5xl font-bold mb-6">{title.toUpperCase()}</h2>
-          <p className="text-lg leading-relaxed">{description}</p>
+          <h2 className="text-5xl font-bold mb-6">{(language==='it' ? title : en_title).toUpperCase()}</h2>
+          <p className="text-lg leading-relaxed">{language==='it' ? description : en_description}</p>
         </motion.div>
 
         {/* Galleria immagini */}

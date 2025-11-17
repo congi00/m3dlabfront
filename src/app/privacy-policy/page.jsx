@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { LanguageProvider } from "@/components/LanguageContext";
 
 export default async function PrivacyPolicyPage() {
   // Fetch server-side
@@ -28,7 +29,7 @@ export default async function PrivacyPolicyPage() {
   );
 
   return (
-    <>
+    <LanguageProvider>
       <Header data={header} />
       <main className="max-w-4xl mx-auto px-6 py-[10rem] pb-[13rem]">
         <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
@@ -62,6 +63,6 @@ export default async function PrivacyPolicyPage() {
         linkUtili={footer.linkUtili}
         linkServizi={footer.linkServizi}
       />
-    </>
+    </LanguageProvider>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { LanguageContext } from "./LanguageContext";
 
 const ProductsSection = ({
   stampa_image,
@@ -13,29 +14,37 @@ const ProductsSection = ({
   stampa_text,
   lavorazioni_text,
   incisioni_text,
+  en_cad_text,
+  en_stampa_text,
+  en_lavorazioni_text,
+  en_incisioni_text,
 }) => {
   const products = [
     {
       id: 1,
       title: stampa_text,
+      en_title: en_stampa_text,
       image: stampa_image.url,
       url: "/servizi/stampa-3d",
     },
     {
       id: 2,
       title: lavorazioni_text,
+      en_title: en_lavorazioni_text,
       image: incisioni_image?.url,
       url: "/servizi/lavorazioni-cnc",
     },
     {
       id: 3,
       title: incisioni_text,
+      en_title: en_lavorazioni_text,
       image: lavorazioni_image?.url,
       url: "/servizi/lavorazioni-laser",
     },
     {
       id: 4,
       title: cad_text,
+      en_title: en_cad_text,
       image: cad_image?.url,
       url: "/servizi/cad",
     },
@@ -82,6 +91,7 @@ const AnimatedBox = ({ product }) => {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
     visible: { opacity: 1, y: 0, scale: 1 },
   };
+  const { language } = useContext(LanguageContext);
 
   return (
     <motion.div
@@ -109,7 +119,7 @@ const AnimatedBox = ({ product }) => {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 flex items-end justify-center p-6 hover:from-black/50 hover:to-black/10 transition-all duration-300">
         <h3 className="text-white text-3xl font-bold text-center drop-shadow-2xl">
-          {product.title?.toUpperCase()}
+          {language === 'it' ? product.title?.toUpperCase() : product.en_title?.toUpperCase()}
         </h3>
       </div>
     </motion.div>

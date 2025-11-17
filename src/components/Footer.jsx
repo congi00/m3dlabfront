@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaInstagram } from "react-icons/fa";
+import { LanguageContext } from "./LanguageContext";
 
 const Footer = ({
   logo,
@@ -16,6 +17,8 @@ const Footer = ({
   linkUtili = [],
   linkServizi = [],
 }) => {
+  const { language } = useContext(LanguageContext);
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -25,6 +28,34 @@ const Footer = ({
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
+
+  // TESTI MULTILINGUA
+  const texts = {
+    en: {
+      services: "Services",
+      usefulLinks: "Useful Links",
+      contacts: "Contacts",
+      operationalHQ: "Operational HQ",
+      legalHQ: "Legal HQ",
+      vat: "VAT",
+      tel: "Tel",
+      email: "Email",
+      social: "Social",
+    },
+    it: {
+      services: "Servizi",
+      usefulLinks: "Link Utili",
+      contacts: "Contatti",
+      operationalHQ: "Sede Operativa",
+      legalHQ: "Sede Legale",
+      vat: "P.IVA",
+      tel: "Tel",
+      email: "Email",
+      social: "Social",
+    },
+  };
+
+  const lang = language === "en" ? texts.en : texts.it;
 
   return (
     <footer
@@ -53,7 +84,7 @@ const Footer = ({
         {/* Servizi */}
         <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
-            Servizi
+            {lang.services}
           </h4>
           {linkServizi.map((link, idx) => (
             <a
@@ -69,7 +100,7 @@ const Footer = ({
         {/* Link Utili */}
         <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
-            Link Utili
+            {lang.usefulLinks}
           </h4>
           {linkUtili.map((link, idx) => (
             <a
@@ -84,12 +115,12 @@ const Footer = ({
         {/* Contatti */}
         <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
-            Contatti
+            {lang.contacts}
           </h4>
 
           {sedeOperativa && (
             <p>
-              Sede Operativa:{" "}
+              {lang.operationalHQ}:{" "}
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                   sedeOperativa
@@ -105,7 +136,7 @@ const Footer = ({
 
           {sedeLegale && (
             <p>
-              Sede Legale:{" "}
+              {lang.legalHQ}:{" "}
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                   sedeLegale
@@ -119,11 +150,11 @@ const Footer = ({
             </p>
           )}
 
-          {pIva && <p>P.IVA: {pIva}</p>}
+          {pIva && <p>{lang.vat}: {pIva}</p>}
 
           {telefono && (
             <p>
-              Tel:{" "}
+              {lang.tel}:{" "}
               <a
                 href={`tel:${telefono}`}
                 className="underline hover:text-gray-300 transition"
@@ -135,7 +166,7 @@ const Footer = ({
 
           {email && (
             <p>
-              Email:{" "}
+              {lang.email}:{" "}
               <a
                 href={`mailto:${email}`}
                 className="underline hover:text-gray-300 transition"
@@ -150,7 +181,7 @@ const Footer = ({
         {social.instagram && (
           <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
             <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
-              Social
+              {lang.social}
             </h4>
             <a
               href={social.instagram}

@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { LanguageContext } from "./LanguageContext";
 
 const LAYOUTS = ["large-left", "large-right", "top-large", "grid"];
 
@@ -25,17 +26,18 @@ const CloseXSVG = ({ className = "" }) => (
   </svg>
 );
 
-export default function ServicePage({ titles = [], texts = [], images = [] }) {
+export default function ServicePage({ titles = [], en_titles = [], texts = [], en_texts = [], images = [] }) {
   const [indices, setIndices] = useState(titles.map(() => 0));
   const [layouts, setLayouts] = useState(titles.map(() => LAYOUTS[0]));
   const [modal, setModal] = useState({ open: false, section: null, index: 0 });
   const [direction, setDirection] = useState(1);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.18 });
   const [groupSize, setGroupSize] = useState(3);
+  const { language } = useContext(LanguageContext);
 
   useEffect(() => {
-    setLayouts(titles.map(() => LAYOUTS[Math.floor(Math.random() * LAYOUTS.length)]));
-  }, [titles]);
+    setLayouts((language === 'it' ? titles : en_titles).map(() => LAYOUTS[Math.floor(Math.random() * LAYOUTS.length)]));
+  }, [titles, en_titles, language]);
 
   useEffect(() => {
     const updateGroupSize = () => {
@@ -107,7 +109,7 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
   return (
     <section className="relative px-2 md:px-16 pt-40" ref={ref}>
       <div className="container mx-auto flex flex-col gap-20">
-        {titles.map((title, secIdx) => {
+        {(language === 'it' ? titles : en_titles).map((title, secIdx) => {
           const sectionImgs = images[secIdx] || [];
           const groups = groupSectionImages(sectionImgs);
           const groupIndex = indices[secIdx] || 0;
@@ -131,7 +133,7 @@ export default function ServicePage({ titles = [], texts = [], images = [] }) {
                   </h2>
                   {texts[secIdx] && (
                     <p style={{ color: "#fff", whiteSpace: "pre-line" }} className="mt-3 max-w-3xl">
-                      {texts[secIdx]}
+                      {language === 'it' ? texts[secIdx] : en_texts[secIdx]}
                     </p>
                   )}
                 </div>
