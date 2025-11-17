@@ -30,6 +30,7 @@ const Footer = ({
     <footer
       className="relative py-12 px-6 pb-2 md:px-16 bg-[#111111] text-white overflow-hidden"
       ref={ref}
+      id="contacts"
     >
       <motion.div
         className="container mx-auto flex flex-col md:flex-row md:justify-between gap-12 md:gap-8"
