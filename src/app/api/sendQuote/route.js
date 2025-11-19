@@ -16,15 +16,17 @@ export async function POST(req) {
     }
     await createQuoteEntry(data, uploadedFile);
 
+    // ---- CREA HTML EMAIL ----
     const html = renderEmailHtml({
-      logoUrl: "https://3dmlab.it/logo.png", // Cambia con il tuo logo
+      logoUrl: "https://3dmlab.it/logo.svg",
       email: data.email,
+      phone: data.phone,
       service: data.service,
       material: data.material,
-      finish: data.finish,
+      color: data.color,
       quantity: data.quantity,
       fileName: data.fileName || (uploadedFile && uploadedFile.name) || "",
-      quote: data.quote,
+      // Nessun totale → quote rimosso
     });
 
     const transporter = nodemailer.createTransport({
@@ -45,7 +47,7 @@ export async function POST(req) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Errore durante l’invio preventivo:", error);
+    console.error("Errore durante l’invio del preventivo:", error);
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }
