@@ -43,7 +43,6 @@ function renderEmailHtml(options = {}) {
                 <td style="padding:24px; text-align:center; border-bottom:1px solid #eee;">
                   <!-- logo inline tramite CID -->
                   <img src="cid:logo3dmlab" alt="Logo" width="120" style="display:block; margin:0 auto 12px;"/>
-                  <h2 style="margin:0; font-size:18px; letter-spacing:1px;">DI MANCINI ANDREA</h2>
                 </td>
               </tr>
 
@@ -77,7 +76,7 @@ function renderEmailHtml(options = {}) {
               <!-- FOOTER -->
               <tr>
                 <td style="padding:14px 20px; text-align:center; background:#fafafa; border-top:1px solid #eee; color:#999; font-size:12px;">
-                  © 3DMLab - DI MANCINI ANDREA
+                  © 3DMLab
                 </td>
               </tr>
 
