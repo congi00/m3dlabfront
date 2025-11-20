@@ -3,13 +3,12 @@ import Header from "@/components/Header";
 import { LanguageProvider } from "@/components/LanguageContext";
 
 export default async function PrivacyPolicyPage() {
-  // Fetch server-side
   const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
   const res = await fetch(
     `${base}/api/homepage?populate[section][populate]=*`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`, // sicuro lato server
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`, 
       },
       cache: "no-store",
     }

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 export default function ClientScrollWrapper({ children }) {
   useEffect(() => {
-    // Scroll automatico se l'URL contiene un hash (#services)
     if (window.location.hash === "#services") {
       const el = document.querySelector(window.location.hash);
       if (el) {
@@ -14,7 +13,6 @@ export default function ClientScrollWrapper({ children }) {
       }
     }
 
-    // Scroll fluido su click dei link con "#"
     const handleClick = (e) => {
       const href = e.target.closest("a")?.getAttribute("href");
       if (href && href.startsWith("/#")) {

@@ -10,7 +10,6 @@
   font-display: swap;
 }
 
-/* ✅ Forziamo il tema dark sempre */
 :root {
   --background: #000000;
   --foreground: #ededed;
@@ -51,7 +50,6 @@ a {
   text-decoration: none;
 }
 
-/* ✅ Forziamo sempre color-scheme dark anche per browser */
 html {
   color-scheme: dark;
 }

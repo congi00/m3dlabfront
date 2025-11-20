@@ -2,7 +2,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { LanguageProvider } from "@/components/LanguageContext";
 
-// Server Component
 export default async function CookiePolicyPage() {
   const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
@@ -10,7 +9,7 @@ export default async function CookiePolicyPage() {
     `${base}/api/homepage?populate[section][populate]=*`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`, // sicuro lato server
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
       },
       cache: "no-store",
     }

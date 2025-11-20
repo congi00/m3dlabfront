@@ -34,7 +34,7 @@ const HomePreventiveSection = ({
     .split("\n")
     .map((item) => item.trim())
     .filter((item) => item !== "");
-    
+
   const rows = [];
   for (let i = 0; i < items.length; i += 2) {
     rows.push(items.slice(i, i + 2));
@@ -48,7 +48,6 @@ const HomePreventiveSection = ({
 
   return (
     <section className="mt-16 md:mt-32 relative overflow-visible pb-8 md:pb-16">
-      {/* OBJViewer solo su mobile/tablet come sfondo */}
       <div className="absolute inset-0 -z-10 md:hidden overflow-visible">
         <OBJViewer modelUrl={modelUrl} logo={logo} setLoaded={setLoaded} loaded={loaded} progress={progress} setProgress={setProgress}/>
         <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
@@ -130,7 +129,6 @@ const HomePreventiveSection = ({
           </div>
         </div>
 
-        {/* OBJViewer invariato per desktop */}
         <div className="hidden overflow-visible md:block md:w-1/2 rounded-lg shadow-lg">
           <OBJViewer modelUrl={modelUrl} logo={logo} setLoaded={setLoaded} loaded={loaded} progress={progress} setProgress={setProgress} set/>
         </div>

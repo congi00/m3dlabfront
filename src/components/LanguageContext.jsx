@@ -9,13 +9,11 @@ export const LanguageContext = createContext({
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState("it");
 
-  // Leggi la lingua da localStorage all'avvio
   useEffect(() => {
     const saved = localStorage.getItem("language");
     if (saved) setLanguage(saved);
   }, []);
 
-  // Aggiorna localStorage quando cambia la lingua
   useEffect(() => {
     localStorage.setItem("language", language);
   }, [language]);

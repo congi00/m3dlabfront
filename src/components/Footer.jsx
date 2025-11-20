@@ -29,7 +29,6 @@ const Footer = ({
     visible: { opacity: 1, y: 0 },
   };
 
-  // TESTI MULTILINGUA
   const texts = {
     en: {
       services: "Services",
@@ -70,7 +69,6 @@ const Footer = ({
         animate={inView ? "visible" : "hidden"}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        {/* Logo */}
         <div className="flex flex-col items-center md:items-end gap-4">
           {logo && (
             <img
@@ -81,7 +79,6 @@ const Footer = ({
           )}
         </div>
 
-        {/* Servizi */}
         <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
             {lang.services}
@@ -97,7 +94,6 @@ const Footer = ({
           ))}
         </div>
 
-        {/* Link Utili */}
         <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
             {lang.usefulLinks}
@@ -112,7 +108,6 @@ const Footer = ({
             </a>
           ))}
         </div>
-        {/* Contatti */}
         <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
             {lang.contacts}
@@ -177,7 +172,6 @@ const Footer = ({
           )}
         </div>
 
-        {/* Social */}
         {social.instagram && (
           <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
             <h4 className="font-bold text-lg mb-2" style={{ color: "#8AAEAE" }}>
@@ -195,7 +189,6 @@ const Footer = ({
         )}
       </motion.div>
 
-      {/* Footer bottom */}
       <div className="border-t border-gray-700 pt-2 text-center mt-8 text-sm">
         Designed by Alessandro Congiusti &copy; {new Date().getFullYear()}
       </div>

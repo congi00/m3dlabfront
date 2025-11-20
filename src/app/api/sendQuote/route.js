@@ -10,17 +10,13 @@ export const runtime = "nodejs";
 
 export async function POST(req) {
   try {
-    // riceviamo JSON dal client (metadati + uploadedFile)
     const data = await req.json();
 
-    // data.uploadedFile dovrebbe essere l'oggetto restituito da Strapi con almeno: { id, name, url, mime }
     const uploadedFile = data.uploadedFile || null;
     const uploadedFilesArray = uploadedFile ? [uploadedFile] : [];
 
-    // crea entry nel CMS (adatta createQuoteEntry al tuo schema)
     await createQuoteEntry(data, uploadedFilesArray);
 
-    // ---- CREA HTML EMAIL ----
     const html = renderEmailHtml({
       email: data.email,
       phone: data.phone,
@@ -29,7 +25,6 @@ export async function POST(req) {
       color: data.color,
       quantity: data.quantity,
       files: uploadedFilesArray.map((f) => f.name || "file"),
-      // logo will be embedded with cid 'logo3dmlab'
     });
 
     const transporter = nodemailer.createTransport({
@@ -40,11 +35,8 @@ export async function POST(req) {
       },
     });
 
-    // Prepariamo gli attachments:
     const attachments = [];
 
-    // 1) Logo inline (cid)
-    // Usa il file logo caricato in /mnt/data/logo.svg (fornito)
     const logoPath = path.join(process.cwd(), "public/logo.png");
     if (fs.existsSync(logoPath)) {
       attachments.push({
@@ -53,11 +45,9 @@ export async function POST(req) {
         cid: "logo3dmlab",
       });
     } else {
-      // se non esiste il file, non falliamo: nascerà l'email senza logo inline
       console.warn("Logo non trovato in", logoPath);
     }
 
-    // 2) File dell'utente: scarichiamo il file da Strapi (URL contenuto in uploadedFile.url)
     if (uploadedFilesArray.length > 0) {
       for (const file of uploadedFilesArray) {
         if (file.url) {
@@ -84,7 +74,6 @@ export async function POST(req) {
       }
     }
 
-    // Invio email a utente e a info3dmlab
     const toRecipients = [
       data.email,
       process.env.GMAIL_USER || "info3dmlab@gmail.com",

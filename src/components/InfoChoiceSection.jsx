@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { LanguageContext } from "./LanguageContext";
 
 const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_option1, en_option2, en_option3 }) => {
-  const [bgPosY, setBgPosY] = useState("-50px"); // default desktop
+  const [bgPosY, setBgPosY] = useState("-50px"); 
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const { language } = useContext(LanguageContext);
 
@@ -16,7 +16,7 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_opt
       setBgPosY(isSmall ? "-340px" : "-50px");
     };
 
-    handleResize(); // controllo iniziale
+    handleResize(); 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -27,7 +27,6 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_opt
     { icon: "/placeholder3.png", text: language === 'it' ? option3 : en_option3 },
   ];
 
-  // Varianti animazioni
   const fadeVariant = {
     hidden: { opacity: 0, y: 40 },
     visible: (i) => ({
@@ -52,13 +51,12 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_opt
         className="container mx-auto h-full relative flex flex-col md:flex-row justify-end"
         style={{ height: "100%", minHeight: "675px" }}
       >
-        {/* CONTENITORE ICONE + TESTI */}
         <motion.div
           className="absolute top-8 right-8 flex flex-col md:flex-row gap-10 md:gap-20"
           initial="hidden"
           whileInView="visible"
           viewport={{
-            once: isMobileOrTablet ? true : false, // 👈 su mobile/tablet: animazione solo una volta
+            once: isMobileOrTablet ? true : false,
             amount: 0.2,
           }}
           variants={fadeVariant}
@@ -72,11 +70,10 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_opt
               initial="hidden"
               whileInView="visible"
               viewport={{
-                once: isMobileOrTablet ? true : false, // 👈 animazione unica solo su mobile/tablet
+                once: isMobileOrTablet ? true : false,
                 amount: 0.3,
               }}
             >
-              {/* Icona animata */}
               <motion.img
                 src={item.icon}
                 alt={`Icon ${index + 1}`}
@@ -98,14 +95,13 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_opt
                 }}
               />
 
-              {/* Testo sotto icona */}
               <motion.div
                 variants={fadeVariant}
                 custom={index + 0.3}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{
-                  once: isMobileOrTablet ? true : false, // 👈 una sola volta su mobile/tablet
+                  once: isMobileOrTablet ? true : false,
                   amount: 0.3,
                 }}
                 className="text-white text-base md:text-lg font-bold leading-snug"
@@ -118,10 +114,8 @@ const InfoChoiceSection = ({ bg_image_section, option1, option2, option3, en_opt
         </motion.div>
       </div>
 
-      {/* Anchor per sezione successiva */}
       <div id="services" style={{ position: "relative", bottom: "200px" }}></div>
 
-      {/* Altezza responsive extra per mobile/tablet */}
       <style jsx>{`
         @media (max-width: 1024px) {
           section {

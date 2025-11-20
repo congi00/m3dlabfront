@@ -40,8 +40,8 @@ export default async function QuotePage() {
           telefono={footer.telefono}
           email={footer.email}
           social={{ instagram: footer.instagram }}
-          linkUtili={footer.linkUtili} // [{label: 'Privacy', url:'/privacy'}]
-          linkServizi={footer.linkServizi} // [{label:'STAMPA 3D', url:'/stampa-3d'}]
+          linkUtili={footer.linkUtili}
+          linkServizi={footer.linkServizi} 
         />
       </footer>
     </LanguageProvider>

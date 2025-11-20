@@ -44,9 +44,7 @@ export default async function HomePage() {
     <LanguageProvider>
       <ClientScrollWrapper>
         <main>
-          {/* HEADER */}
           <Header data={header} />
-          {/* ALTRE SEZIONI */}
           <HomePreventiveSection
             {...home_preventive_section}
             logo={header.logo}
@@ -75,8 +73,8 @@ export default async function HomePage() {
             telefono={footer.telefono}
             email={footer.email}
             social={{ instagram: footer.instagram }}
-            linkUtili={footer.linkUtili} // [{label: 'Privacy', url:'/privacy'}]
-            linkServizi={footer.linkServizi} // [{label:'STAMPA 3D', url:'/stampa-3d'}]
+            linkUtili={footer.linkUtili} 
+            linkServizi={footer.linkServizi} 
           />
         </footer>
       </ClientScrollWrapper>

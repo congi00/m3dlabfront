@@ -9,13 +9,11 @@ const WhoSection = ({ title, en_title, en_description, description, images = [] 
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const { language } = useContext(LanguageContext);
 
-  // Hook per animazioni on scroll
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
 
-  // Controlla se è mobile/tablet
   useEffect(() => {
     const handleResize = () => {
       setIsMobileOrTablet(window.innerWidth < 1024);
@@ -25,7 +23,6 @@ const WhoSection = ({ title, en_title, en_description, description, images = [] 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Varianti d’animazione
   const textVariants = {
     hidden: { opacity: 0, x: -40 },
     visible: { opacity: 1, x: 0 },
@@ -44,7 +41,6 @@ const WhoSection = ({ title, en_title, en_description, description, images = [] 
       <div id="chi-siamo" style={{ position: "relative", bottom: "200px" }}></div>
 
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-8 pt-0">
-        {/* Testo */}
         <motion.div
           ref={ref}
           className="md:w-1/2 pr-3 pl-3 md:pr-20 md:pl-0"
@@ -62,7 +58,6 @@ const WhoSection = ({ title, en_title, en_description, description, images = [] 
           <p className="text-lg leading-relaxed">{language==='it' ? description : en_description}</p>
         </motion.div>
 
-        {/* Galleria immagini */}
         <motion.div
           className="md:w-1/2 grid grid-cols-1 gap-4"
           variants={imageVariants}

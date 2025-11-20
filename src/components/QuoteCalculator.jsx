@@ -5,7 +5,6 @@ import { useDropzone } from "react-dropzone";
 import { Upload, Layers, Calculator } from "lucide-react";
 import { LanguageContext } from "./LanguageContext";
 
-// Strapi base url (non hardcoded): usa env var su Vercel
 const STRAPI_BASE = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 const QuoteCalculator = () => {
@@ -23,7 +22,6 @@ const QuoteCalculator = () => {
   const [showModal, setShowModal] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // --- GESTIONE DROPZONE IN BASE AL SERVIZIO ---
   const { getRootProps, getInputProps } = useDropzone({
     accept:
       service === (language === "it" ? "Stampa 3D" : "3D Printing")
@@ -51,8 +49,6 @@ const QuoteCalculator = () => {
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  // Upload singolo file (primo file) *direttamente* su Strapi dal client.
-  // Questo evita di inviare file di grandi dimensioni alla function Vercel.
   const uploadFirstFileToStrapi = async (file) => {
     if (!file) return null;
     if (!STRAPI_BASE) {
@@ -62,12 +58,9 @@ const QuoteCalculator = () => {
     const fd = new FormData();
     fd.append("files", file);
 
-    // Nota: se Strapi richiede Authorization per upload, è possibile impostare un token,
-    // ma esporre un token nel client non è consigliato. Se il tuo Strapi permette upload pubblici, va bene così.
     const res = await fetch(`${STRAPI_BASE.replace(/\/$/, "")}/api/upload`, {
       method: "POST",
       body: fd,
-      // headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_TOKEN}` } // opzionale se usi token
     });
 
     if (!res.ok) {
@@ -77,8 +70,6 @@ const QuoteCalculator = () => {
 
     const json = await res.json();
 
-    // Normalizziamo la risposta di Strapi (versioni diverse rispondono in forme diverse)
-    // Possibili forme: [{ id, name, url, ... }] oppure { data: [{ attributes: { url, ... } }] }
     let uploaded = null;
 
     if (Array.isArray(json) && json.length > 0) {
@@ -104,11 +95,9 @@ const QuoteCalculator = () => {
         mime: a.mime,
       };
     } else {
-      // fallback: se Strapi restituisce oggetto con attributes in prima posizione
       uploaded = json;
     }
 
-    // Se url relativo (es. /uploads/...), rendilo assoluto
     if (uploaded && uploaded.url && !/^https?:\/\//i.test(uploaded.url)) {
       uploaded.url = `${STRAPI_BASE.replace(/\/$/, "")}${uploaded.url}`;
     }
@@ -153,14 +142,12 @@ const QuoteCalculator = () => {
     setLoading(true);
 
     try {
-      // 1) Carichiamo il primo file su Strapi direttamente dal client (riduce payload alla function)
       const firstFile = files[0] || null;
       let uploadedFileInfo = null;
       if (firstFile) {
         uploadedFileInfo = await uploadFirstFileToStrapi(firstFile);
       }
 
-      // 2) Inviamo METADATI compatti alla API route (JSON)
       const payload = {
         service,
         material,
@@ -169,7 +156,7 @@ const QuoteCalculator = () => {
         quote: estimatedCost,
         email,
         phone,
-        uploadedFile: uploadedFileInfo, // può essere null
+        uploadedFile: uploadedFileInfo,
       };
 
       const res = await fetch("/api/sendQuote", {
@@ -192,7 +179,6 @@ const QuoteCalculator = () => {
     }
   };
 
-  // --- MATERIALI E COLORI ---
   const materials3D = {
     FDM: {
       PLA: ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde", "Grigio"],
@@ -225,7 +211,6 @@ const QuoteCalculator = () => {
     POLICARBONATO: [],
   };
 
-  // --- TESTI DINAMICI ---
   const texts = {
     title: language === "it" ? "Calcola il tuo Preventivo" : "Calculate Your Quote",
     subtitle:
@@ -262,10 +247,6 @@ const QuoteCalculator = () => {
     selectColor: language === "it" ? "Seleziona Colore" : "Select Color",
   };
 
-  // Ora puoi usare `texts` ovunque nel JSX per sostituire i testi fissi
-  // Esempio:
-  // <h1>{texts.title}</h1>
-  // <p>{texts.subtitle}</p>
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center px-1 md:px-6 py-12 mt-16 backdrop-blur-xl bg-transparent">
@@ -292,7 +273,6 @@ const QuoteCalculator = () => {
               <p className="text-base opacity-80">{texts.subtitle}</p>
             </div>
 
-            {/* Upload */}
             <div className="p-6 rounded-2xl shadow-lg bg-white/10 border border-white/20">
               <div className="flex items-center gap-3 mb-4">
                 <Upload size={24} />
@@ -320,7 +300,6 @@ const QuoteCalculator = () => {
               )}
             </div>
 
-            {/* Selezioni */}
             <div className="p-6 rounded-2xl shadow-lg bg-white/10 border border-white/20 space-y-4">
               <div className="flex items-center gap-3 mb-2">
                 <Layers size={24} />
@@ -328,7 +307,6 @@ const QuoteCalculator = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Servizio */}
                 <div>
                   <label className="font-medium">{texts.serviceLabel}</label>
                   <select
@@ -350,7 +328,6 @@ const QuoteCalculator = () => {
                   </select>
                 </div>
 
-                {/* Materiale */}
                 <div>
                   <label className="font-medium">{texts.materialLabel}</label>
                   <select
@@ -376,7 +353,6 @@ const QuoteCalculator = () => {
                   )}
                 </div>
 
-                {/* Colore */}
                 {service === (language === "it" ? "Stampa 3D" : "3D Printing") && (
                   <div>
                     <label className="font-medium">{texts.colorLabel}</label>
@@ -403,7 +379,6 @@ const QuoteCalculator = () => {
                   </div>
                 )}
 
-                {/* Quantità */}
                 <div>
                   <label className="font-medium">{texts.quantityLabel}</label>
                   <input
@@ -420,7 +395,6 @@ const QuoteCalculator = () => {
               </div>
             </div>
 
-            {/* Email + Telefono */}
             <div className="p-6 rounded-2xl shadow-lg bg-white/10 border border-white/20 space-y-3">
               <label className="font-medium">{texts.emailLabel}</label>
               <input
@@ -447,7 +421,6 @@ const QuoteCalculator = () => {
               )}
             </div>
 
-            {/* Calcola */}
             <div className="p-6 rounded-2xl shadow-lg bg-white/10 border border-white/20 text-center">
               <button
                 onClick={handleCalculate}

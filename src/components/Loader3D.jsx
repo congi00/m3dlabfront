@@ -9,9 +9,7 @@ export default function Loader3D({ logoUrl, progress }) {
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black overflow-hidden"
       style={{ height: "110%" }}
     >
-      {/* 🔥 Effetto laser HD migliorato */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Layer 1 – glow diffuso centrale */}
         <motion.div
           className="absolute inset-0"
           style={{
@@ -30,7 +28,6 @@ export default function Loader3D({ logoUrl, progress }) {
           }}
         />
 
-        {/* Layer 2 – laser dinamico più sottile e preciso */}
         <motion.div
           className="absolute inset-0"
           animate={{
@@ -50,7 +47,6 @@ export default function Loader3D({ logoUrl, progress }) {
           }}
         />
 
-        {/* Layer 3 – riflesso morbido */}
         <motion.div
           className="absolute inset-0"
           animate={{
@@ -70,7 +66,6 @@ export default function Loader3D({ logoUrl, progress }) {
         />
       </div>
 
-      {/* 🌬 Logo breathing */}
       {logoUrl && (
         <motion.img
           src={logoUrl}

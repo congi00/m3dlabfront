@@ -16,7 +16,7 @@ function renderEmailHtml(options = {}) {
     material = "",
     color = "",
     quantity = "",
-    files = [], // array di nomi file
+    files = [], 
   } = options;
 
   const fileListHtml =

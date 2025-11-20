@@ -30,9 +30,7 @@ export default function Header({ data }) {
   return (
     <header
       className="fixed top-0 left-0 h-28 w-full z-50 flex items-center justify-between py-4 shadow-md px-6 md:px-10 backdrop-blur-md"
-      // style={{ backgroundColor: "#000000E0" }}
     >
-      {/* LOGO (desktop: sinistra / mobile: centrato) */}
       <div
         className="
           flex items-center gap-2 pb-3
@@ -53,7 +51,6 @@ export default function Header({ data }) {
         )}
       </div>
 
-      {/* MENU ICONA (solo mobile/tablet) */}
       <div className="flex md:hidden items-center z-50">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -78,7 +75,6 @@ export default function Header({ data }) {
         </button>
       </div>
 
-      {/* NAV + LANGUAGE (solo desktop) */}
       <div className="hidden md:flex items-center gap-10 ml-auto">
         <nav>
           <ul className="flex gap-8">
@@ -98,7 +94,6 @@ export default function Header({ data }) {
         <LanguageToggle initialLanguage={lang} />
       </div>
 
-      {/* MENU MOBILE ANIMATO */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -130,7 +125,6 @@ export default function Header({ data }) {
                 </motion.li>
               ))}
 
-              {/* LANGUAGE TOGGLE nel menu mobile — perfettamente centrato */}
               <motion.li
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

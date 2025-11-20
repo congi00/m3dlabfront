@@ -5,8 +5,6 @@ import { LanguageContext } from "./LanguageContext";
 export default function LanguageToggle() {
   const { language, setLanguage } = useContext(LanguageContext);
 
-  // Legge da localStorage se necessario (già gestito dal context)
-  // Non serve più useState locale
 
   const toggleLanguage = () => {
     setLanguage(language === "it" ? "en" : "it");

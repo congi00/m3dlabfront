@@ -188,7 +188,6 @@ export default function ServicePage({
               animate={inView ? "visible" : "hidden"}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              {/* Header */}
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-8">
                 <div className="md:flex-1">
                   <h2 className="text-3xl md:text-4xl font-bold text-left">
@@ -228,11 +227,9 @@ export default function ServicePage({
                 )}
               </div>
 
-              {/* Images */}
 
               <div className="relative w-full">
                 {" "}
-                {/* wrapper relativo per piazzare frecce assolute */}
                 {isDesktop && groups.length > 1 && (
                   <>
                     <button
@@ -308,7 +305,6 @@ export default function ServicePage({
         })}
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
         {modal.open && modal.section !== null && (
           <motion.div

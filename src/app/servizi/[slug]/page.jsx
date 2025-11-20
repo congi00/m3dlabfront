@@ -125,7 +125,7 @@ export default async function ServiceSlugPage({ params }) {
         en_titles={servizio.map((s) => s.en_title)}
         texts={servizio.map((s) => s.text)}
         en_texts={servizio.map((s) => s.en_text)}
-        images={servizio.map((s) => s.images)} // array di array, come richiesto dal componente
+        images={servizio.map((s) => s.images)}
       />
     </LanguageProvider>
   );

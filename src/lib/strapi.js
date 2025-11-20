@@ -1,12 +1,9 @@
-// lib/strapi.js
-// Gestione upload multipli + creazione quote
+
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
 
-/**
- * 🔹 Upload multiplo su Strapi (accetta array o singolo file)
- */
+
 async function uploadFileToStrapi(files) {
   if (!files) return [];
 
@@ -32,7 +29,6 @@ async function uploadFileToStrapi(files) {
 
     const json = await res.json();
     if (Array.isArray(json.data) && json.data.length > 0) {
-      // push the attributes, which contain name, url, etc.
       uploadedFiles.push(json.data[0].attributes);
     }
   }
@@ -41,10 +37,7 @@ async function uploadFileToStrapi(files) {
 }
 
 
-/**
- * 🔹 Crea entry “quote”
- * Accetta più file e salva tutti gli ID nel campo "attachments"
- */
+
 async function createQuoteEntry(data, uploadedFiles = []) {
   const payload = {
     data: {
@@ -55,11 +48,10 @@ async function createQuoteEntry(data, uploadedFiles = []) {
       color: data.color,
       quantity: data.quantity,
       quote: data.quote,
-      fileNames: uploadedFiles.map(f => f.name || "").join(", "), // lista nomi nel DB
+      fileNames: uploadedFiles.map(f => f.name || "").join(", "), 
     },
   };
 
-  // se il modello ha un campo media multiplo chiamato "attachments"
   if (uploadedFiles.length > 0) {
     payload.data.attachments = uploadedFiles.map((f) => f.id);
   }

@@ -5,7 +5,7 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import * as THREE from "three";
-import Loader3D from "./Loader3D"; // 👈 nuovo import
+import Loader3D from "./Loader3D";
 
 function RotatingModel({ url, onLoaded }) {
   const obj = useLoader(OBJLoader, url);
@@ -48,7 +48,6 @@ function RotatingModel({ url, onLoaded }) {
 
 export default function OBJViewer({ modelUrl, logo, setLoaded, loaded, progress , setProgress}) {
 
-  // Blocca scroll durante il loading
   useEffect(() => {
     if (!loaded) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
@@ -57,7 +56,6 @@ export default function OBJViewer({ modelUrl, logo, setLoaded, loaded, progress 
     };
   }, [loaded]);
 
-  // Simula progressione barra
   useEffect(() => {
     if (!loaded) {
       const interval = setInterval(() => {

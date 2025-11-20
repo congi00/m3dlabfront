@@ -82,7 +82,7 @@ const AnimatedBox = ({ product }) => {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const checkWidth = () => setIsDesktop(window.innerWidth >= 768); // 768px = breakpoint "md"
+    const checkWidth = () => setIsDesktop(window.innerWidth >= 768);
     checkWidth();
     window.addEventListener("resize", checkWidth);
     return () => window.removeEventListener("resize", checkWidth);
@@ -105,7 +105,7 @@ const AnimatedBox = ({ product }) => {
       whileHover={{ scale: 1.05 }}
       style={{
         height: "600px",
-        ...(isDesktop && { width: "48%", minWidth: "25%" }), // ✅ solo desktop/tablet
+        ...(isDesktop && { width: "48%", minWidth: "25%" }),
       }}
     >
       <Link href={product.url}>

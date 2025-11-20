@@ -8,7 +8,7 @@ export default async function TermsOfUsePage() {
     `${base}/api/homepage?populate[section][populate]=*`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`, // server-side sicuro
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`, 
       },
       cache: "no-store",
     }
