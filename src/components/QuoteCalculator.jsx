@@ -247,7 +247,7 @@ const QuoteCalculator = () => {
     phoneLabel: language === "it" ? "Telefono" : "Phone",
     calculateBtn: language === "it" ? "Calcola Preventivo" : "Calculate Quote",
     sending: language === "it" ? "Invio in corso..." : "Sending...",
-    successTitle: language === "it" ? "✅ Preventivo inviato!" : "✅ Quote Sent!",
+    successTitle: language === "it" ? "Preventivo inviato!" : "Quote Sent!",
     successText:
       language === "it"
         ? `Riceverai un'email all'indirizzo ${email} con tutti i dettagli.`
