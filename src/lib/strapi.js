@@ -1,50 +1,67 @@
 // lib/strapi.js
-// Helper per gestire upload file e creazione quote su Strapi
+// Gestione upload multipli + creazione quote
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL; // es: https://tuo-strapi.it
-const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN; // Token API Strapi
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
 
-// 🔹 Upload file su Strapi
-async function uploadFileToStrapi(file) {
-  if (!file) return null;
+/**
+ * 🔹 Upload multiplo su Strapi (accetta array o singolo file)
+ */
+async function uploadFileToStrapi(files) {
+  if (!files) return [];
 
-  const fd = new FormData();
-  fd.append("files", file, file.name);
+  const fileArray = Array.isArray(files) ? files : [files];
+  const uploadedFiles = [];
 
-  const res = await fetch(`${STRAPI_URL}/api/upload`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${STRAPI_TOKEN}`,
-    },
-    body: fd,
-  });
+  for (const file of fileArray) {
+    const fd = new FormData();
+    fd.append("files", file, file.name);
 
-  if (!res.ok) {
-    const txt = await res.text();
-    throw new Error(`Upload file fallito: ${res.status} ${txt}`);
+    const res = await fetch(`${STRAPI_URL}/api/upload`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${STRAPI_TOKEN}`,
+      },
+      body: fd,
+    });
+
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(`Upload file fallito: ${res.status} ${txt}`);
+    }
+
+    const json = await res.json();
+    if (Array.isArray(json.data) && json.data.length > 0) {
+      // push the attributes, which contain name, url, etc.
+      uploadedFiles.push(json.data[0].attributes);
+    }
   }
 
-  const json = await res.json();
-  return Array.isArray(json) && json.length ? json[0] : json;
+  return uploadedFiles;
 }
 
-// 🔹 Crea nuova entry “quote” in Strapi
-async function createQuoteEntry(data, uploadedFile) {
+
+/**
+ * 🔹 Crea entry “quote”
+ * Accetta più file e salva tutti gli ID nel campo "attachments"
+ */
+async function createQuoteEntry(data, uploadedFiles = []) {
   const payload = {
     data: {
       email: data.email,
+      phone: String(data.phone),
       service: data.service,
       material: data.material,
-      finish: data.finish,
+      color: data.color,
       quantity: data.quantity,
       quote: data.quote,
-      fileName: data.fileName || (uploadedFile && uploadedFile.name) || "",
+      fileNames: uploadedFiles.map(f => f.name || "").join(", "), // lista nomi nel DB
     },
   };
 
-  // Se hai un campo media in Strapi chiamato "attachment"
-  if (uploadedFile && uploadedFile.id) {
-    payload.data.attachment = uploadedFile.id;
+  // se il modello ha un campo media multiplo chiamato "attachments"
+  if (uploadedFiles.length > 0) {
+    payload.data.attachments = uploadedFiles.map((f) => f.id);
   }
 
   const res = await fetch(`${STRAPI_URL}/api/quotes`, {

@@ -5,6 +5,9 @@ import { useDropzone } from "react-dropzone";
 import { Upload, Layers, Calculator } from "lucide-react";
 import { LanguageContext } from "./LanguageContext";
 
+// Strapi base url (non hardcoded): usa env var su Vercel
+const STRAPI_BASE = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+
 const QuoteCalculator = () => {
   const [files, setFiles] = useState([]);
   const { language } = useContext(LanguageContext);
@@ -48,6 +51,71 @@ const QuoteCalculator = () => {
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
+  // Upload singolo file (primo file) *direttamente* su Strapi dal client.
+  // Questo evita di inviare file di grandi dimensioni alla function Vercel.
+  const uploadFirstFileToStrapi = async (file) => {
+    if (!file) return null;
+    if (!STRAPI_BASE) {
+      throw new Error("STRAPI base URL non configurata");
+    }
+
+    const fd = new FormData();
+    fd.append("files", file);
+
+    // Nota: se Strapi richiede Authorization per upload, è possibile impostare un token,
+    // ma esporre un token nel client non è consigliato. Se il tuo Strapi permette upload pubblici, va bene così.
+    const res = await fetch(`${STRAPI_BASE.replace(/\/$/, "")}/api/upload`, {
+      method: "POST",
+      body: fd,
+      // headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_TOKEN}` } // opzionale se usi token
+    });
+
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(`Upload a Strapi fallito: ${res.status} - ${txt}`);
+    }
+
+    const json = await res.json();
+
+    // Normalizziamo la risposta di Strapi (versioni diverse rispondono in forme diverse)
+    // Possibili forme: [{ id, name, url, ... }] oppure { data: [{ attributes: { url, ... } }] }
+    let uploaded = null;
+
+    if (Array.isArray(json) && json.length > 0) {
+      uploaded = json[0];
+    } else if (json && Array.isArray(json.data) && json.data.length > 0) {
+      const d = json.data[0];
+      uploaded = {
+        id: d.id || (d.attributes && d.attributes.id),
+        name: (d.attributes && d.attributes.name) || d.name,
+        url: (d.attributes && d.attributes.url) || d.url,
+        size: (d.attributes && d.attributes.size) || undefined,
+        mime: (d.attributes && d.attributes.mime) || undefined,
+      };
+    } else if (json && json[0] && typeof json[0] === "object") {
+      uploaded = json[0];
+    } else if (json && json.data && typeof json.data === "object" && json.data.attributes) {
+      const a = json.data.attributes;
+      uploaded = {
+        id: json.data.id,
+        name: a.name,
+        url: a.url,
+        size: a.size,
+        mime: a.mime,
+      };
+    } else {
+      // fallback: se Strapi restituisce oggetto con attributes in prima posizione
+      uploaded = json;
+    }
+
+    // Se url relativo (es. /uploads/...), rendilo assoluto
+    if (uploaded && uploaded.url && !/^https?:\/\//i.test(uploaded.url)) {
+      uploaded.url = `${STRAPI_BASE.replace(/\/$/, "")}${uploaded.url}`;
+    }
+
+    return uploaded;
+  };
+
   const handleCalculate = async () => {
     const errors = {};
     if (!files.length)
@@ -85,24 +153,39 @@ const QuoteCalculator = () => {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      files.forEach((file) => formData.append("files", file));
-      formData.append("service", service);
-      formData.append("material", material);
-      formData.append("color", color);
-      formData.append("quantity", quantity);
-      formData.append("quote", estimatedCost);
-      formData.append("email", email);
-      formData.append("phone", phone);
+      // 1) Carichiamo il primo file su Strapi direttamente dal client (riduce payload alla function)
+      const firstFile = files[0] || null;
+      let uploadedFileInfo = null;
+      if (firstFile) {
+        uploadedFileInfo = await uploadFirstFileToStrapi(firstFile);
+      }
+
+      // 2) Inviamo METADATI compatti alla API route (JSON)
+      const payload = {
+        service,
+        material,
+        color,
+        quantity,
+        quote: estimatedCost,
+        email,
+        phone,
+        uploadedFile: uploadedFileInfo, // può essere null
+      };
 
       const res = await fetch("/api/sendQuote", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error("Errore invio");
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Errore invio: ${res.status} ${text}`);
+      }
+
       setSuccess(true);
     } catch (err) {
+      console.error("Errore handleCalculate:", err);
       setShowModal(true);
     } finally {
       setLoading(false);
