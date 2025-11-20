@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { LanguageContext } from "./LanguageContext";
+import Link from "next/link";
 
 const ProductsSection = ({
   stampa_image,
@@ -37,7 +38,7 @@ const ProductsSection = ({
     {
       id: 3,
       title: incisioni_text,
-      en_title: en_lavorazioni_text,
+      en_title: en_incisioni_text,
       image: lavorazioni_image?.url,
       url: "/servizi/lavorazioni-laser",
     },
@@ -106,22 +107,25 @@ const AnimatedBox = ({ product }) => {
         height: "600px",
         ...(isDesktop && { width: "48%", minWidth: "25%" }), // ✅ solo desktop/tablet
       }}
-      onClick={() => window.open(product.url)}
     >
-      <motion.div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: `url(https://m3dlab-production.up.railway.app${product.image})`,
-        }}
-        whileHover={{ scale: 1.1 }}
-        transition={{ duration: 0.1 }}
-      />
+      <Link href={product.url}>
+        <motion.div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(https://m3dlab-production.up.railway.app${product.image})`,
+          }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.1 }}
+        />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 flex items-end justify-center p-6 hover:from-black/50 hover:to-black/10 transition-all duration-300">
-        <h3 className="text-white text-3xl font-bold text-center drop-shadow-2xl">
-          {language === 'it' ? product.title?.toUpperCase() : product.en_title?.toUpperCase()}
-        </h3>
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 flex items-end justify-center p-6 hover:from-black/50 hover:to-black/10 transition-all duration-300">
+          <h3 className="text-white text-3xl font-bold text-center drop-shadow-2xl">
+            {language === "it"
+              ? product.title?.toUpperCase()
+              : product.en_title?.toUpperCase()}
+          </h3>
+        </div>
+      </Link>
     </motion.div>
   );
 };

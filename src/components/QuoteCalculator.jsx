@@ -369,7 +369,7 @@ const QuoteCalculator = () => {
               <button
                 onClick={handleCalculate}
                 disabled={loading}
-                className="px-8 py-3 rounded-xl bg-white/20 border border-white/30 font-semibold hover:bg-white/30 transition disabled:opacity-50"
+                className="px-8 py-3 rounded-xl bg-white/20 border border-white/30 font-semibold hover:bg-white/30 text-white transition disabled:opacity-50"
               >
                 {loading ? texts.sending : texts.calculateBtn}
               </button>

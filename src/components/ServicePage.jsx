@@ -9,24 +9,66 @@ import { LanguageContext } from "./LanguageContext";
 const LAYOUTS = ["large-left", "large-right", "top-large", "grid"];
 
 const ChevronLeftSVG = ({ className = "" }) => (
-  <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none">
-    <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  <svg
+    className={className}
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M15 18L9 12L15 6"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 const ChevronRightSVG = ({ className = "" }) => (
-  <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none">
-    <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  <svg
+    className={className}
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M9 6L15 12L9 18"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 const CloseXSVG = ({ className = "" }) => (
-  <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  <svg
+    className={className}
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M18 6L6 18M6 6l12 12"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
-export default function ServicePage({ titles = [], en_titles = [], texts = [], en_texts = [], images = [] }) {
+export default function ServicePage({
+  titles = [],
+  en_titles = [],
+  texts = [],
+  en_texts = [],
+  images = [],
+}) {
   const [indices, setIndices] = useState(titles.map(() => 0));
   const [layouts, setLayouts] = useState(titles.map(() => LAYOUTS[0]));
   const [modal, setModal] = useState({ open: false, section: null, index: 0 });
@@ -34,9 +76,14 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.18 });
   const [groupSize, setGroupSize] = useState(3);
   const { language } = useContext(LanguageContext);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    setLayouts((language === 'it' ? titles : en_titles).map(() => LAYOUTS[Math.floor(Math.random() * LAYOUTS.length)]));
+    setLayouts(
+      (language === "it" ? titles : en_titles).map(
+        () => LAYOUTS[Math.floor(Math.random() * LAYOUTS.length)]
+      )
+    );
   }, [titles, en_titles, language]);
 
   useEffect(() => {
@@ -46,6 +93,13 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
     updateGroupSize();
     window.addEventListener("resize", updateGroupSize);
     return () => window.removeEventListener("resize", updateGroupSize);
+  }, []);
+
+  useEffect(() => {
+    const checkWidth = () => setIsDesktop(window.innerWidth >= 1024);
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
   }, []);
 
   const groupSectionImages = (sectionImgs = []) => {
@@ -60,14 +114,20 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
     const groups = groupSectionImages(images[secIdx] || []);
     if (groups.length <= 1) return;
     setDirection(1);
-    setIndices((prev) => prev.map((v, i) => (i === secIdx ? (v + 1) % groups.length : v)));
+    setIndices((prev) =>
+      prev.map((v, i) => (i === secIdx ? (v + 1) % groups.length : v))
+    );
   };
 
   const prevSlide = (secIdx) => {
     const groups = groupSectionImages(images[secIdx] || []);
     if (groups.length <= 1) return;
     setDirection(-1);
-    setIndices((prev) => prev.map((v, i) => (i === secIdx ? (v === 0 ? groups.length - 1 : v - 1) : v)));
+    setIndices((prev) =>
+      prev.map((v, i) =>
+        i === secIdx ? (v === 0 ? groups.length - 1 : v - 1) : v
+      )
+    );
   };
 
   const openModalAt = (secIdx, groupIdx, imgIdx) => {
@@ -104,12 +164,15 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
     return () => window.removeEventListener("keydown", onKey);
   }, [modal.open, modal.section, modal.index]);
 
-  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
+  const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   return (
     <section className="relative px-2 md:px-16 pt-40" ref={ref}>
       <div className="container mx-auto flex flex-col gap-20">
-        {(language === 'it' ? titles : en_titles).map((title, secIdx) => {
+        {(language === "it" ? titles : en_titles).map((title, secIdx) => {
           const sectionImgs = images[secIdx] || [];
           const groups = groupSectionImages(sectionImgs);
           const groupIndex = indices[secIdx] || 0;
@@ -132,36 +195,84 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
                     {title.toUpperCase()}
                   </h2>
                   {texts[secIdx] && (
-                    <p style={{ color: "#fff", whiteSpace: "pre-line" }} className="mt-3 max-w-3xl">
-                      {language === 'it' ? texts[secIdx] : en_texts[secIdx]}
+                    <p
+                      style={{ color: "#fff", whiteSpace: "pre-line" }}
+                      className="mt-3 max-w-3xl"
+                    >
+                      {language === "it" ? texts[secIdx] : en_texts[secIdx]}
                     </p>
                   )}
                 </div>
 
-                <div className="flex items-center gap-3">
-                  {groups.length > 1 && (
-                    <>
-                      <button
-                        aria-label="Previous"
-                        onClick={() => prevSlide(secIdx)}
-                        className="border border-gray-400 text-gray-700 bg-white/60 backdrop-blur-sm p-2 rounded-full hover:bg-white transition"
-                      >
-                        <ChevronLeftSVG />
-                      </button>
-                      <button
-                        aria-label="Next"
-                        onClick={() => nextSlide(secIdx)}
-                        className="border border-gray-400 text-gray-700 bg-white/60 backdrop-blur-sm p-2 rounded-full hover:bg-white transition"
-                      >
-                        <ChevronRightSVG />
-                      </button>
-                    </>
-                  )}
-                </div>
+                {!isDesktop && (
+                  <div className="flex items-center gap-3">
+                    {groups.length > 1 && (
+                      <>
+                        <button
+                          aria-label="Previous"
+                          onClick={() => prevSlide(secIdx)}
+                          className="border border-gray-400 text-gray-700 bg-white/60 backdrop-blur-sm p-2 rounded-full hover:bg-white transition"
+                        >
+                          <ChevronLeftSVG />
+                        </button>
+                        <button
+                          aria-label="Next"
+                          onClick={() => nextSlide(secIdx)}
+                          className="border border-gray-400 text-gray-700 bg-white/60 backdrop-blur-sm p-2 rounded-full hover:bg-white transition"
+                        >
+                          <ChevronRightSVG />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Images */}
-              <div className="w-full">
+
+              <div className="relative w-full">
+                {" "}
+                {/* wrapper relativo per piazzare frecce assolute */}
+                {isDesktop && groups.length > 1 && (
+                  <>
+                    <button
+                      aria-label="Previous"
+                      onClick={() => prevSlide(secIdx)}
+                      style={{
+                        position: "absolute",
+                        left: "8px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        zIndex: 10,
+                        background: "rgba(255,255,255,0.6)",
+                        border: "1px solid #ccc",
+                        borderRadius: "9999px",
+                        padding: "0.5rem",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <ChevronLeftSVG />
+                    </button>
+                    <button
+                      aria-label="Next"
+                      onClick={() => nextSlide(secIdx)}
+                      style={{
+                        position: "absolute",
+                        right: "8px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        zIndex: 10,
+                        background: "rgba(255,255,255,0.6)",
+                        border: "1px solid #ccc",
+                        borderRadius: "9999px",
+                        padding: "0.5rem",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <ChevronRightSVG />
+                    </button>
+                  </>
+                )}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`${secIdx}-${groupIndex}-${layout}`}
@@ -171,7 +282,6 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
                     transition={{ duration: 0.45 }}
                     className="w-full"
                   >
-                    {/* Layout rendering */}
                     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                       {currentGroup.map((img, idx) => (
                         <div
@@ -209,7 +319,10 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
             className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/85"
             onClick={closeModal}
           >
-            <div className="relative max-w-[1200px] w-full max-h-[90vh] mx-4 md:mx-8" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="relative max-w-[1200px] w-full max-h-[90vh] mx-4 md:mx-8"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={closeModal}
                 className="fixed right-2 top-2 md:right-4 md:top-4 z-30 p-2 rounded-full border border-white/60 text-white bg-black/30 hover:bg-black/50"
@@ -225,8 +338,13 @@ export default function ServicePage({ titles = [], en_titles = [], texts = [], e
                 </button>
 
                 <Image
-                  src={`https://m3dlab-production.up.railway.app${(images[modal.section] || [])[modal.index]?.url}`}
-                  alt={(images[modal.section] || [])[modal.index]?.alternativeText || ""}
+                  src={`https://m3dlab-production.up.railway.app${
+                    (images[modal.section] || [])[modal.index]?.url
+                  }`}
+                  alt={
+                    (images[modal.section] || [])[modal.index]
+                      ?.alternativeText || ""
+                  }
                   width={1000}
                   height={800}
                   quality={80}
