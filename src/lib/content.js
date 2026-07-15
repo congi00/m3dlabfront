@@ -122,7 +122,7 @@ export const siteContent = {
     sedeOperativa: "Via Fratelli Rosselli 185, Porto San Giorgio (FM)",
     sedeLegale: "Via Egidi 8, Fermo (FM)",
     pIva: "02506160445",
-    telefono: "3469427548",
+    telefono: "3460427548",
     email: "Info3dmlab@gmail.com",
     instagram: "https://www.instagram.com/3dmlab_",
     linkUtili: [{ label: "Privacy", url: "/privacy" }],
