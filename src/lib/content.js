@@ -44,7 +44,7 @@ export const siteContent = {
       { Label: "HOME", en_Label: "HOME", Url: "/" },
       { Label: "SERVIZI", en_Label: "SERVICES", Url: "/#services" },
       { Label: "CHI SIAMO", en_Label: "ABOUT US", Url: "/#chi-siamo" },
-      { Label: "CONTATTI", en_Label: "CONTACTS", Url: "/contacts" },
+      { Label: "CONTATTI", en_Label: "CONTACTS", Url: "/#contacts" },
     ],
   },
 
