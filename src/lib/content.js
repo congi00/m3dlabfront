@@ -109,7 +109,7 @@ export const siteContent = {
     title: "Chi siamo",
     en_title: "About us",
     content:
-      "La nostra realtà nasce nel 2020 dall’esperienza di un ingegnere industriale specializzato in fabbricazione digitale. Ci occupiamo di stampa 3D, lavorazioni laser e CNC, con particolare attenzione alla prototipia e allo sviluppo di componenti personalizzati. La padronanza di diversi software di disegno 3D ci consente di offrire soluzioni precise, innovative e su misura per privati e aziende.",
+      "La nostra realtà nasce nel 2020 a Porto San Giorgio (FM), dall’esperienza di un ingegnere industriale specializzato in fabbricazione digitale. Ci occupiamo di stampa 3D, lavorazioni laser e CNC, con particolare attenzione alla prototipia e allo sviluppo di componenti personalizzati. La padronanza di diversi software di disegno 3D ci consente di offrire soluzioni precise, innovative e su misura per privati e aziende.",
     en_content:
       "Our company was founded in 2020 from the experience of an industrial engineer specialized in digital fabrication. We work with 3D printing, laser processing and CNC machining, with particular attention to prototyping and the development of custom components. Our command of various 3D design software allows us to offer precise, innovative and tailor-made solutions for individuals and businesses.",
   },
@@ -125,8 +125,38 @@ export const siteContent = {
     telefono: "3460427548",
     email: "Info3dmlab@gmail.com",
     instagram: "https://www.instagram.com/3dmlab_",
-    linkUtili: [{ label: "Privacy", url: "/privacy" }],
-    linkServizi: [{ label: "STAMPA 3D", url: "/stampa-3d" }],
+    linkUtili: [{
+      "label": "Privacy Policy",
+      "url": "/privacy-policy"
+    },
+    {
+      "label": "Cookie Policy",
+      "url": "/cookie-policy"
+    },
+    {
+      "label": "Terms Of Use",
+      "url": "/terms-of-use"
+    }],
+    linkServizi: [{
+      "label": "STAMPA 3D",
+      "en_label": "3D PRINTING",
+      "url": "/servizi/stampa-3d"
+    },
+    {
+      "label": "LAVORAZIONI LASER",
+      "en_label": "LASER PROCESSING",
+      "url": "/servizi/lavorazioni-laser"
+    },
+    {
+      "label": "LAVORAZIONI CNC",
+      "en_label": "CNC MACHINING",
+      "url": "/servizi/lavorazioni-cnc"
+    },
+    {
+      "label": "DISEGNO CAD e SCANSIONE 3D",
+      "en_label": "3D SCANNING AND CAD PROCESSING",
+      "url": "/servizi/cad"
+    }],
   },
 
   // Il componente "shared.stampa-gallery" esiste nello schema Strapi ma
@@ -136,12 +166,45 @@ export const siteContent = {
   // Se hai immagini da mostrare, aggiungile qui con lo stesso formato:
   // { url: "/uploads/nome-file.jpg", alternativeText: "..." }
   stampaGallery: {
-    stampa: [],
-    incisione: [],
-    lavorazioni: [],
-    disegno: [],
-    scansioni: [],
-    post: [],
+    stampa: [
+      { url: "/uploads/Andrea_Mancini_17_7f77a3e11e.jpg"},
+      { url: "/uploads/Andrea_Mancini_16_816adaa835.jpg"},
+      { url: "/uploads/IMG_5040_a3d2fc9832.jpg"},
+      { url: "/uploads/IMG_5038_c3d579cb9d.jpg"},
+      { url: "/uploads/large_Andrea_Mancini_19_9904733f71.jpg"},
+      { url: "/uploads/medium_Andrea_Mancini_79_d80be32407.jpg"},
+    ],
+    incisione: [
+      { url: "/uploads/Andrea_Mancini_64_bff1038229.jpg"},
+      { url: "/uploads/Andrea_Mancini_67_31306a6ab8.jpg"},
+      { url: "/uploads/Andrea_Mancini_87_4b8f312598.jpg"},
+      { url: "/uploads/Andrea_Mancini_88_fbeda275ce.jpg"},
+    ],
+    lavorazioni: [
+      { url: "/uploads/Andrea_Mancini_28_f4ce30d3f1.jpg"},
+      { url: "/uploads/Andrea_Mancini_24_e85d27bb34.jpg"},
+      { url: "/uploads/Andrea_Mancini_37_ea19af45b5.jpg"},
+      { url: "/uploads/Andrea_Mancini_39_fad4965caf.jpg"},
+      { url: "/uploads/Andrea_Mancini_42_943e33cf41.jpg"},
+    ],
+    disegno: [
+      { url: "/uploads/Andrea_Mancini_45_104b1b58b2.jpg"},
+      { url: "/uploads/Andrea_Mancini_46_e058d23d73.jpg"},
+      { url: "/uploads/Andrea_Mancini_47_ae84e4e086.jpg"},
+      { url: "/uploads/Andrea_Mancini_44_0f2da23c56.jpg"},
+    ],
+    scansioni: [
+      { url: "/uploads/Andrea_Mancini_50_c740c2bb19.jpg"},
+      { url: "/uploads/Andrea_Mancini_48_19b5841864.jpg"},
+      { url: "/uploads/Andrea_Mancini_52_0cfd46cf3a.jpg"},
+      { url: "/uploads/Andrea_Mancini_51_8a650cad73.jpg"},
+    ],
+    post: [
+      { url: "/uploads/Andrea_Mancini_53_1840a608a5.jpg"},
+      { url: "/uploads/Andrea_Mancini_54_6d78475ad2.jpg"},
+      { url: "/uploads/Andrea_Mancini_59_27e3fce22d.jpg"},
+      { url: "/uploads/Andrea_Mancini_63_d15282db2a.jpg"},
+    ],
   },
 };
 
