@@ -16,6 +16,7 @@ function renderEmailHtml(options = {}) {
     material = "",
     color = "",
     quantity = "",
+    attachmentUrl= "",
     files = [], 
   } = options;
 
@@ -72,7 +73,7 @@ function renderEmailHtml(options = {}) {
 
                   <p>
                     Allegato:
-                    <a href="${attachmentUrl}">
+                    <a href="${escapeHtml(attachmentUrl)}">
                     Scarica il file STL
                     </a>
                   </p>
