@@ -86,6 +86,16 @@ const QuoteCalculator = () => {
     try {
       const firstFile = files[0] || null;
 
+      const formDataF = new FormData();
+      i(firstFile)
+        formDataF.append("file", firstFile);
+      const uploadResponse = await fetch("/api/upload", {
+        method: "POST",
+        body: formDataF,
+      });
+      
+      const { url } = await uploadResponse.json();
+
       const formData = new FormData();
       formData.append("service", service);
       formData.append("material", material);
@@ -95,7 +105,7 @@ const QuoteCalculator = () => {
       formData.append("email", email);
       formData.append("phone", phone);
       if (firstFile) {
-        formData.append("attachment", firstFile, firstFile.name);
+        formData.append("attachment", url);
       }
 
       const res = await fetch("/api/sendQuote", {

@@ -70,6 +70,13 @@ function renderEmailHtml(options = {}) {
                     Verrai ricontattato entro 24h. Se desideri modificare il progetto o inviare nuove versioni dei file, rispondi pure a questa email.
                   </p>
 
+                  <p>
+                    Allegato:
+                    <a href="${attachmentUrl}">
+                    Scarica il file STL
+                    </a>
+                  </p>
+
                 </td>
               </tr>
 

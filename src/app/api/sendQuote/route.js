@@ -47,7 +47,7 @@ export async function POST(req) {
     const color = formData.get("color") || "";
     const quantity = formData.get("quantity");
     const quote = formData.get("quote");
-    const attachmentFile = formData.get("attachment");
+    const attachmentUrl = formData.get("attachmentUrl");
 
     if (!email || !phone || !service || !material || !quantity) {
       return NextResponse.json(
@@ -56,20 +56,6 @@ export async function POST(req) {
       );
     }
 
-    // L'allegato arriva direttamente come multipart, non serve più
-    // caricarlo prima su Strapi: viene allegato subito alla mail.
-    const attachments = [];
-    let attachmentName = null;
-
-    if (attachmentFile && typeof attachmentFile.arrayBuffer === "function") {
-      const buffer = Buffer.from(await attachmentFile.arrayBuffer());
-      attachmentName = attachmentFile.name || "allegato";
-      attachments.push({
-        filename: attachmentName,
-        content: buffer,
-        contentType: attachmentFile.type || undefined,
-      });
-    }
 
     appendQuoteToLog({
       email,
@@ -79,7 +65,7 @@ export async function POST(req) {
       color,
       quantity,
       quote,
-      fileName: attachmentName,
+      fileName: attachmentUrl,
       createdAt: new Date().toISOString(),
     });
 
@@ -90,7 +76,7 @@ export async function POST(req) {
       material,
       color,
       quantity,
-      files: attachmentName ? [attachmentName] : [],
+      files: attachmentUrl ? [attachmentUrl] : []
     });
 
     const transporter = nodemailer.createTransport({
@@ -122,7 +108,6 @@ export async function POST(req) {
       to: toRecipients,
       subject: `Nuova richiesta preventivo da ${email}`,
       html,
-      attachments,
     });
 
     return NextResponse.json({ success: true });
