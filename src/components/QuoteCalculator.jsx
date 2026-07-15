@@ -87,7 +87,7 @@ const QuoteCalculator = () => {
       const firstFile = files[0] || null;
 
       const formDataF = new FormData();
-      i(firstFile)
+      if(firstFile)
         formDataF.append("file", firstFile);
       const uploadResponse = await fetch("/api/upload", {
         method: "POST",
