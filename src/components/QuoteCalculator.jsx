@@ -99,7 +99,7 @@ const QuoteCalculator = () => {
         throw new Error(`Upload fallito: ${error}`);
       }
       
-      const { url } = await uploadResponse.json();
+      const { pathname } = await uploadResponse.json();
 
       const formData = new FormData();
       formData.append("service", service);
@@ -110,7 +110,7 @@ const QuoteCalculator = () => {
       formData.append("email", email);
       formData.append("phone", phone);
       if (firstFile) {
-        formData.append("attachment", url);
+        formData.append("attachmentPath", pathname);
       }
 
       const res = await fetch("/api/sendQuote", {
