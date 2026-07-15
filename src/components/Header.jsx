@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { LanguageContext } from "./LanguageContext";
+import { resolveMediaUrl } from "@/lib/content";
 
 export default function Header({ data }) {
   if (!data) return null;
@@ -39,11 +40,7 @@ export default function Header({ data }) {
       >
         {logo?.url && (
           <img
-            src={
-              logo.url.startsWith("http")
-                ? logo.url
-                : `https://m3dlab-production.up.railway.app${logo.url}`
-            }
+            src={resolveMediaUrl(logo.url)}
             alt="Logo"
             onClick={(e) => handleClick(e, "/")}
             className="w-[180px] sm:w-[200px] md:w-[240px] lg:w-[300px] h-auto object-contain transition-transform duration-300 hover:scale-105 cursor-pointer"

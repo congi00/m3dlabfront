@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import Loader3D from "./Loader3D";
 import { LanguageContext } from "./LanguageContext";
+import { resolveMediaUrl } from "@/lib/content";
 
 const HomePreventiveSection = ({
   renderImage,
@@ -39,7 +40,7 @@ const HomePreventiveSection = ({
   for (let i = 0; i < items.length; i += 2) {
     rows.push(items.slice(i, i + 2));
   }
-  const modelUrl = `https://m3dlab-production.up.railway.app${renderImage.url}`;
+  const modelUrl = resolveMediaUrl(renderImage.url);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 15 },
@@ -133,7 +134,7 @@ const HomePreventiveSection = ({
           <OBJViewer modelUrl={modelUrl} logo={logo} setLoaded={setLoaded} loaded={loaded} progress={progress} setProgress={setProgress} set/>
         </div>
       </div>
-      {!loaded && <Loader3D logoUrl={`https://m3dlab-production.up.railway.app${logo.url}`} progress={progress} />}
+      {!loaded && <Loader3D logoUrl={resolveMediaUrl(logo.url)} progress={progress} />}
     </section>
   );
 };

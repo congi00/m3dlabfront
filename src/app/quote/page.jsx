@@ -3,27 +3,11 @@ import QuoteCalculator from "@/components/QuoteCalculator";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/components/LanguageContext";
+import { siteContent } from "@/lib/content";
 
 export default async function QuotePage() {
-  const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-  const res = await fetch(
-    `${base}/api/homepage?populate[section][populate]=*`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      },
-      cache: "no-store",
-    }
-  );
-
-  const { data } = await res.json();
-  const homepage = data;
-  const header = homepage.section?.find(
-    (s) => s.__component === "shared.header"
-  );
-  const footer = homepage.section?.find(
-    (s) => s.__component === "shared.footer"
-  );
+  const header = siteContent.header;
+  const footer = siteContent.footer;
 
   return (
     <LanguageProvider>

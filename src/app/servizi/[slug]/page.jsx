@@ -1,30 +1,17 @@
 import Header from "@/components/Header";
 import { LanguageProvider } from "@/components/LanguageContext";
 import ServicePage from "@/components/ServicePage";
+import { siteContent } from "@/lib/content";
 
 export default async function ServiceSlugPage({ params }) {
   const { slug } = params;
-  
 
-  const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-  const res = await fetch(
-    `${base}/api/homepage?populate[section][populate]=*`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      },
-      cache: "no-store",
-    }
-  );
-
-  const { data } = await res.json();
-  const homepage = data;
-  const header = homepage.section?.find(
-    (s) => s.__component === "shared.header"
-  );
-  const gallery = homepage.section?.find(
-    (s) => s.__component === "shared.stampa-gallery"
-  );
+  const header = siteContent.header;
+  // Nel backend Strapi il componente "stampa-gallery" non è mai stato
+  // popolato (nessun dato salvato). siteContent.stampaGallery fornisce
+  // quindi array vuoti di default: nessun crash, semplicemente nessuna
+  // immagine di galleria finché non ne aggiungi in src/lib/content.js.
+  const gallery = siteContent.stampaGallery;
 
   const serviziData = {
     "stampa-3d": [

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaInstagram } from "react-icons/fa";
 import { LanguageContext } from "./LanguageContext";
+import { resolveMediaUrl } from "@/lib/content";
 
 const Footer = ({
   logo,
@@ -72,7 +73,7 @@ const Footer = ({
         <div className="flex flex-col items-center md:items-end gap-4">
           {logo && (
             <img
-              src={`https://m3dlab-production.up.railway.app${logo.url}`}
+              src={resolveMediaUrl(logo.url)}
               alt={logo.alternativeText || "Logo"}
               className="w-40 md:w-56 object-contain"
             />

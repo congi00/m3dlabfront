@@ -5,8 +5,6 @@ import { useDropzone } from "react-dropzone";
 import { Upload, Layers, Calculator } from "lucide-react";
 import { LanguageContext } from "./LanguageContext";
 
-const STRAPI_BASE = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-
 const QuoteCalculator = () => {
   const [files, setFiles] = useState([]);
   const { language } = useContext(LanguageContext);
@@ -49,62 +47,6 @@ const QuoteCalculator = () => {
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  const uploadFirstFileToStrapi = async (file) => {
-    if (!file) return null;
-    if (!STRAPI_BASE) {
-      throw new Error("STRAPI base URL non configurata");
-    }
-
-    const fd = new FormData();
-    fd.append("files", file);
-
-    const res = await fetch(`${STRAPI_BASE.replace(/\/$/, "")}/api/upload`, {
-      method: "POST",
-      body: fd,
-    });
-
-    if (!res.ok) {
-      const txt = await res.text();
-      throw new Error(`Upload a Strapi fallito: ${res.status} - ${txt}`);
-    }
-
-    const json = await res.json();
-
-    let uploaded = null;
-
-    if (Array.isArray(json) && json.length > 0) {
-      uploaded = json[0];
-    } else if (json && Array.isArray(json.data) && json.data.length > 0) {
-      const d = json.data[0];
-      uploaded = {
-        id: d.id || (d.attributes && d.attributes.id),
-        name: (d.attributes && d.attributes.name) || d.name,
-        url: (d.attributes && d.attributes.url) || d.url,
-        size: (d.attributes && d.attributes.size) || undefined,
-        mime: (d.attributes && d.attributes.mime) || undefined,
-      };
-    } else if (json && json[0] && typeof json[0] === "object") {
-      uploaded = json[0];
-    } else if (json && json.data && typeof json.data === "object" && json.data.attributes) {
-      const a = json.data.attributes;
-      uploaded = {
-        id: json.data.id,
-        name: a.name,
-        url: a.url,
-        size: a.size,
-        mime: a.mime,
-      };
-    } else {
-      uploaded = json;
-    }
-
-    if (uploaded && uploaded.url && !/^https?:\/\//i.test(uploaded.url)) {
-      uploaded.url = `${STRAPI_BASE.replace(/\/$/, "")}${uploaded.url}`;
-    }
-
-    return uploaded;
-  };
-
   const handleCalculate = async () => {
     const errors = {};
     if (!files.length)
@@ -143,26 +85,22 @@ const QuoteCalculator = () => {
 
     try {
       const firstFile = files[0] || null;
-      let uploadedFileInfo = null;
-      if (firstFile) {
-        uploadedFileInfo = await uploadFirstFileToStrapi(firstFile);
-      }
 
-      const payload = {
-        service,
-        material,
-        color,
-        quantity,
-        quote: estimatedCost,
-        email,
-        phone,
-        uploadedFile: uploadedFileInfo,
-      };
+      const formData = new FormData();
+      formData.append("service", service);
+      formData.append("material", material);
+      formData.append("color", color || "");
+      formData.append("quantity", quantity);
+      formData.append("quote", estimatedCost);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      if (firstFile) {
+        formData.append("attachment", firstFile, firstFile.name);
+      }
 
       const res = await fetch("/api/sendQuote", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       });
 
       if (!res.ok) {

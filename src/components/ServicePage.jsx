@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { LanguageContext } from "./LanguageContext";
+import { resolveMediaUrl } from "@/lib/content";
 
 const LAYOUTS = ["large-left", "large-right", "top-large", "grid"];
 
@@ -287,7 +288,7 @@ export default function ServicePage({
                           onClick={() => openModalAt(secIdx, groupIndex, idx)}
                         >
                           <Image
-                            src={`https://m3dlab-production.up.railway.app${img.url}`}
+                            src={resolveMediaUrl(img.url)}
                             alt={img.alternativeText || ""}
                             fill
                             loading="lazy"
@@ -334,9 +335,9 @@ export default function ServicePage({
                 </button>
 
                 <Image
-                  src={`https://m3dlab-production.up.railway.app${
+                  src={resolveMediaUrl(
                     (images[modal.section] || [])[modal.index]?.url
-                  }`}
+                  )}
                   alt={
                     (images[modal.section] || [])[modal.index]
                       ?.alternativeText || ""

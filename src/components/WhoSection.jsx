@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { LanguageContext } from "./LanguageContext";
+import { resolveMediaUrl } from "@/lib/content";
 
 const WhoSection = ({ title, en_title, en_description, description, images = [] }) => {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
@@ -74,7 +75,7 @@ const WhoSection = ({ title, en_title, en_description, description, images = [] 
                 transition={{ duration: 0.4 }}
               >
                 <img
-                  src={`https://m3dlab-production.up.railway.app${img.url}`}
+                  src={resolveMediaUrl(img.url)}
                   alt={img.alternativeText || "Chi siamo"}
                   className="object-cover w-full h-full"
                 />

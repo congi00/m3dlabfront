@@ -6,6 +6,7 @@ import { OrbitControls } from "@react-three/drei";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import * as THREE from "three";
 import Loader3D from "./Loader3D";
+import { resolveMediaUrl } from "@/lib/content";
 
 function RotatingModel({ url, onLoaded }) {
   const obj = useLoader(OBJLoader, url);
@@ -65,9 +66,7 @@ export default function OBJViewer({ modelUrl, logo, setLoaded, loaded, progress 
     }
   }, [loaded]);
 
-  const logoUrl = logo?.url
-    ? `https://m3dlab-production.up.railway.app${logo.url}`
-    : null;
+  const logoUrl = logo?.url ? resolveMediaUrl(logo.url) : null;
 
   return (
     <div className="relative w-full h-[500px] overflow-visible">

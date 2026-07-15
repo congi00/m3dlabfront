@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { LanguageContext } from "./LanguageContext";
+import { resolveMediaUrl } from "@/lib/content";
 import Link from "next/link";
 
 const ProductsSection = ({
@@ -50,14 +51,6 @@ const ProductsSection = ({
       url: "/servizi/cad",
     },
   ];
-
-  console.log("ProductsSection props:", {
-    cad_text,
-    cad_image,
-    stampa_image,
-    incisioni_image,
-    lavorazioni_image,
-  });
 
   return (
     <section
@@ -112,7 +105,7 @@ const AnimatedBox = ({ product }) => {
         <motion.div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(https://m3dlab-production.up.railway.app${product.image})`,
+            backgroundImage: `url(${resolveMediaUrl(product.image)})`,
           }}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.1 }}

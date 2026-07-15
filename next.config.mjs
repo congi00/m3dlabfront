@@ -1,15 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        unoptimized: true,
-        remotePatterns: [
-          {
-            protocol: "https",
-            hostname: "https://m3dlab.onrender.com",
-            pathname: "/uploads/**",
-          },
-        ],
-      },
+  images: {
+    // Le immagini erano prima ospitate sul backend Strapi (remotePatterns
+    // verso m3dlab.onrender.com / railway.app). Ora sono file locali serviti
+    // da /public/uploads, quindi non serve più alcun pattern remoto.
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
+

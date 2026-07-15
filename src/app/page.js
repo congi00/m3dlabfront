@@ -6,39 +6,15 @@ import WhoSection from "@/components/WhoSection";
 import Footer from "@/components/Footer";
 import ClientScrollWrapper from "@/components/ClientScrollWrapper";
 import { LanguageProvider } from "@/components/LanguageContext";
+import { siteContent } from "@/lib/content";
 
 export default async function HomePage() {
-  const base = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-  const res = await fetch(
-    `${base}/api/homepage?populate[section][populate]=*`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      },
-      cache: "no-store",
-    }
-  );
-
-  const { data } = await res.json();
-  const homepage = data;
-  const header = homepage.section?.find(
-    (s) => s.__component === "shared.header"
-  );
-  const home_preventive_section = homepage.section?.find(
-    (s) => s.__component === "shared.home-preventive-section"
-  );
-  const info_choice_section = homepage.section?.find(
-    (s) => s.__component === "shared.info-choice-section"
-  );
-  const products_section = homepage.section?.find(
-    (s) => s.__component === "shared.products-section"
-  );
-  const who_section = homepage.section?.find(
-    (s) => s.__component === "shared.who-section"
-  );
-  const footer = homepage.section?.find(
-    (s) => s.__component === "shared.footer"
-  );
+  const header = siteContent.header;
+  const home_preventive_section = siteContent.homePreventiveSection;
+  const info_choice_section = siteContent.infoChoiceSection;
+  const products_section = siteContent.productsSection;
+  const who_section = siteContent.whoSection;
+  const footer = siteContent.footer;
 
   return (
     <LanguageProvider>
