@@ -93,6 +93,11 @@ const QuoteCalculator = () => {
         method: "POST",
         body: formDataF,
       });
+
+      if (!uploadResponse.ok) {
+        const error = await uploadResponse.text();
+        throw new Error(`Upload fallito: ${error}`);
+      }
       
       const { url } = await uploadResponse.json();
 
