@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import { renderEmailHtml } from "@/components/EmailTemplate";
 import fs from "fs";
 import path from "path";
+import { get } from "@vercel/blob";
 
 export const runtime = "nodejs";
 
@@ -47,7 +48,17 @@ export async function POST(req) {
     const color = formData.get("color") || "";
     const quantity = formData.get("quantity");
     const quote = formData.get("quote");
-    const attachmentUrl = formData.get("attachmentUrl");
+    const attachmentPath = formData.get("attachmentPath");
+
+    let downloadUrl = null;
+
+    if (attachmentPath) {
+      const blob = await get(attachmentPath, {
+        access: "private",
+      });
+
+      downloadUrl = blob.downloadUrl;
+    }
 
     if (!email || !phone || !service || !material || !quantity) {
       return NextResponse.json(
@@ -57,7 +68,7 @@ export async function POST(req) {
     }
 
     const attachments = [];
-    
+
     appendQuoteToLog({
       email,
       phone,
@@ -66,7 +77,7 @@ export async function POST(req) {
       color,
       quantity,
       quote,
-      fileName: attachmentUrl,
+      fileName: attachmentPath,
       createdAt: new Date().toISOString(),
     });
 
@@ -77,7 +88,7 @@ export async function POST(req) {
       material,
       color,
       quantity,
-      files: attachmentUrl ? [attachmentUrl] : []
+      files: downloadUrl ? [downloadUrl] : [],
     });
 
     const transporter = nodemailer.createTransport({
