@@ -55,7 +55,8 @@ const QuoteCalculator = () => {
       errors.material = language === "it" ? "Seleziona un materiale." : "Select a material.";
     if (
       service === (language === "it" ? "Stampa 3D" : "3D Printing") &&
-      !color
+      !color &&
+      materials3D?.["FDM"]?.[material]?.length
     )
       errors.color =
         language === "it" ? "Seleziona un colore." : "Select a color.";
