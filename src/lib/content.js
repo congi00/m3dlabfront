@@ -90,15 +90,15 @@ export const siteContent = {
     stampa_image: { url: "/uploads/Andrea_Mancini_16_816adaa835.jpg" },
     incisioni_image: { url: "/uploads/Andrea_Mancini_39_fad4965caf.jpg" },
     lavorazioni_image: { url: "/uploads/Andrea_Mancini_71_13825ddc12.jpg" },
-    cad_image: null,
+    cad_image: { url: "/uploads/Andrea_Mancini_51_8a650cad73.jpg" },
     stampa_text: "Stampa 3D",
     en_stampa_text: "3D Printing",
     lavorazioni_text: "Lavorazioni CNC",
     en_lavorazioni_text: "CNC Machining",
     incisioni_text: "Lavorazioni Laser",
     en_incisioni_text: "Laser Processing",
-    cad_text: null,
-    en_cad_text: null,
+    cad_text: "Scansioni 3D e Modellazione CAD",
+    en_cad_text: "3D Scanning and CAD Processing",
   },
 
   whoSection: {
