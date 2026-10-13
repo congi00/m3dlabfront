@@ -23,6 +23,13 @@ export default async function ServiceSlugPage({ params }) {
         images: gallery.stampa,
       },
       {
+        title: "Selective Laser Sintering",
+        en_title: "Selective Laser Sintering",
+        text: `Ideale per realizzare componenti funzionali e resistenti attraverso la sinterizzazione laser di polveri polimeriche. Consente di creare geometrie complesse, dettagli articolati e parti meccaniche senza strutture di supporto, risultando adatta sia alla prototipazione funzionale sia alla produzione di piccoli lotti.`,
+        en_text: `Ideal for producing strong, functional components by laser sintering polymer powders. It enables the creation of complex geometries, intricate details and mechanical parts without support structures, making it suitable for both functional prototyping and small-batch production.`,
+        images: gallery.sls,
+      },
+      {
         title: "Post Produzione",
         en_title: "Post Production",
         text: `Offriamo trattamenti di levigatura, verniciatura e rifinitura per ottenere un risultato estetico e funzionale di livello professionale.`,
