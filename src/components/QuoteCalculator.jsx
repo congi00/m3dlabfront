@@ -147,6 +147,7 @@ const QuoteCalculator = () => {
       "ABS-CF": ["Nero"],
       "PA-CF": ["Nero"],
     },
+    FDM: ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde", "Grigio"],
     MSLA: {
       "ABS Like": ["Nera", "Bianca", "Traslucida"],
       "Flame Retardant": ["Grigio"],
@@ -158,6 +159,16 @@ const QuoteCalculator = () => {
       "High Temp Resin": ["Traslucido"],
     },
   };
+
+  const materialsSLS = {
+    "PA12": ["Grigio", "Nero"]
+  }
+
+  const materialSLA = {
+    "V5": ["Nero", "Grigio", "Clear", "Bianco"],
+    "Elastic 50A": ["Clear"],
+    "Silicone 80A": ["Nero"]
+  }
 
   const materialsCNC = {
     ALLUMINIO: ["5083", "6082", "6061"],
@@ -276,6 +287,12 @@ const QuoteCalculator = () => {
                     <option value={language === "it" ? "Stampa 3D" : "3D Printing"}>
                       {language === "it" ? "Stampa 3D" : "3D Printing"}
                     </option>
+                    <option value={language === "it" ? "SLA" : "SLA"}>
+                      {language === "it" ? "SLA" : "SLA"}
+                    </option>
+                    <option value={language === "it" ? "SLS" : "SLS"}>
+                      {language === "it" ? "SLS" : "SLS"}
+                    </option>
                     <option value={language === "it" ? "Lavorazioni CNC" : "CNC Machining"}>
                       {language === "it" ? "Lavorazioni CNC" : "CNC Machining"}
                     </option>
@@ -296,7 +313,18 @@ const QuoteCalculator = () => {
                             {mat}
                           </option>
                         ))
-                      : Object.keys(materialsCNC).map((mat) => (
+                      : service === (language === "it" ? "SLS" : "SLS") ? 
+                        Object.keys(materialsSLS).map((mat) => (
+                          <option key={mat} value={mat}>
+                            {mat}
+                          </option>
+                        ))
+                      : service === (language === "it" ? "SLA" : "SLA") ? 
+                      Object.keys(materialSLA).map((mat) => (
+                        <option key={mat} value={mat}>
+                          {mat}
+                        </option>
+                      )) : Object.keys(materialsCNC).map((mat) => (
                           <option key={mat} value={mat}>
                             {mat}
                           </option>
