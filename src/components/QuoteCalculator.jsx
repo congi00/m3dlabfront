@@ -8,7 +8,9 @@ import { LanguageContext } from "./LanguageContext";
 const QuoteCalculator = () => {
   const [files, setFiles] = useState([]);
   const { language } = useContext(LanguageContext);
-  const [service, setService] = useState(language === "it" ? "Stampa 3D" : "3D Printing");
+  const [service, setService] = useState(
+    language === "it" ? "Stampa 3D" : "3D Printing"
+  );
   const [material, setMaterial] = useState("");
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -50,9 +52,13 @@ const QuoteCalculator = () => {
   const handleCalculate = async () => {
     const errors = {};
     if (!files.length)
-      errors.file = language === "it" ? "Carica almeno un file." : "Upload at least one file.";
+      errors.file =
+        language === "it"
+          ? "Carica almeno un file."
+          : "Upload at least one file.";
     if (!material)
-      errors.material = language === "it" ? "Seleziona un materiale." : "Select a material.";
+      errors.material =
+        language === "it" ? "Seleziona un materiale." : "Select a material.";
     if (
       service === (language === "it" ? "Stampa 3D" : "3D Printing") &&
       !color &&
@@ -67,7 +73,9 @@ const QuoteCalculator = () => {
           : "Enter a valid quantity.";
     if (!email)
       errors.email =
-        language === "it" ? "Inserisci un indirizzo email." : "Enter your email.";
+        language === "it"
+          ? "Inserisci un indirizzo email."
+          : "Enter your email.";
     else if (!validateEmail(email))
       errors.email =
         language === "it"
@@ -75,7 +83,9 @@ const QuoteCalculator = () => {
           : "Email address is not valid.";
     if (!phone)
       errors.phone =
-        language === "it" ? "Inserisci un numero di telefono." : "Enter your phone number.";
+        language === "it"
+          ? "Inserisci un numero di telefono."
+          : "Enter your phone number.";
 
     setErrorMessages(errors);
     if (Object.keys(errors).length > 0) return;
@@ -88,8 +98,7 @@ const QuoteCalculator = () => {
       const firstFile = files[0] || null;
 
       const formDataF = new FormData();
-      if(firstFile)
-        formDataF.append("file", firstFile);
+      if (firstFile) formDataF.append("file", firstFile);
       const uploadResponse = await fetch("/api/upload", {
         method: "POST",
         body: formDataF,
@@ -99,7 +108,7 @@ const QuoteCalculator = () => {
         const error = await uploadResponse.text();
         throw new Error(`Upload fallito: ${error}`);
       }
-      
+
       const { pathname } = await uploadResponse.json();
 
       const formData = new FormData();
@@ -134,41 +143,55 @@ const QuoteCalculator = () => {
   };
 
   const materials3D = {
-    FDM: {
-      PLA: ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde", "Grigio"],
-      PETG: ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde", "Grigio"],
-      ABS: ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde", "Grigio"],
-      "TPU 90": [],
-      "TPU 95": [],
-      "TPU 98": ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde"],
-      "PA 12": ["Nero"],
-      "PCP-PBT": ["Traslucido"],
-      "PETG-CF": ["Nero"],
-      "ABS-CF": ["Nero"],
-      "PA-CF": ["Nero"],
-    },
-    FDM: ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde", "Grigio"],
-    MSLA: {
-      "ABS Like": ["Nera", "Bianca", "Traslucida"],
-      "Flame Retardant": ["Grigio"],
-      "Resin Tough 2000": ["Nera"],
-      "Resin Tough 1500": ["Nera"],
-      "Elastic 50A": ["Traslucido"],
-      "Rigid 4000": ["Bianco"],
-      "Rigid 10K": ["Bianco"],
-      "High Temp Resin": ["Traslucido"],
-    },
+    PLA: [
+      "Nero",
+      "Bianco",
+      "Giallo",
+      "Rosso",
+      "Blu",
+      "Marrone",
+      "Verde",
+      "Grigio",
+    ],
+    PETG: [
+      "Nero",
+      "Bianco",
+      "Giallo",
+      "Rosso",
+      "Blu",
+      "Marrone",
+      "Verde",
+      "Grigio",
+    ],
+    ABS: [
+      "Nero",
+      "Bianco",
+      "Giallo",
+      "Rosso",
+      "Blu",
+      "Marrone",
+      "Verde",
+      "Grigio",
+    ],
+    "TPU 90": [],
+    "TPU 95": [],
+    "TPU 98": ["Nero", "Bianco", "Giallo", "Rosso", "Blu", "Marrone", "Verde"],
+    "PA 12": ["Nero"],
+    "PCP-PBT": ["Traslucido"],
+    "PETG-CF": ["Nero"],
+    "ABS-CF": ["Nero"],
+    "PA-CF": ["Nero"],
   };
 
   const materialsSLS = {
-    "PA12": ["Grigio", "Nero"]
-  }
+    PA12: ["Grigio", "Nero"],
+  };
 
-  const materialSLA = {
-    "V5": ["Nero", "Grigio", "Clear", "Bianco"],
+  const materialsSLA = {
+    V5: ["Nero", "Grigio", "Clear", "Bianco"],
     "Elastic 50A": ["Clear"],
-    "Silicone 80A": ["Nero"]
-  }
+    "Silicone 80A": ["Nero"],
+  };
 
   const materialsCNC = {
     ALLUMINIO: ["5083", "6082", "6061"],
@@ -177,12 +200,14 @@ const QuoteCalculator = () => {
   };
 
   const texts = {
-    title: language === "it" ? "Calcola il tuo Preventivo" : "Calculate Your Quote",
+    title:
+      language === "it" ? "Calcola il tuo Preventivo" : "Calculate Your Quote",
     subtitle:
       language === "it"
         ? "Carica il tuo file e scopri in tempo reale il costo stimato."
         : "Upload your file and see the estimated cost in real time.",
-    uploadTitle: language === "it" ? "1. Carica i tuoi file" : "1. Upload Your Files",
+    uploadTitle:
+      language === "it" ? "1. Carica i tuoi file" : "1. Upload Your Files",
     dropText:
       language === "it"
         ? "Trascina qui i tuoi file oppure clicca per selezionarli"
@@ -208,10 +233,29 @@ const QuoteCalculator = () => {
         ? "Si è verificato un problema durante l'invio dei dati. Ti invitiamo a contattarci al numero +39 333 1234567."
         : "There was a problem submitting the data. Please contact us at +39 333 1234567.",
     closeBtn: language === "it" ? "Chiudi" : "Close",
-    selectMaterial: language === "it" ? "Seleziona Materiale" : "Select Material",
+    selectMaterial:
+      language === "it" ? "Seleziona Materiale" : "Select Material",
     selectColor: language === "it" ? "Seleziona Colore" : "Select Color",
   };
 
+  const serviceOptions = {
+    "3D Printing": materials3D,
+    "Stampa 3D": materials3D,
+    SLA: materialsSLA,
+    SLS: materialsSLS,
+    "CNC Machining": materialsCNC,
+    "Lavorazioni CNC": materialsCNC,
+  };
+  
+  const availableMaterials = serviceOptions[service] || {};
+  
+  const availableColors = availableMaterials[material] || [];
+  
+  const showColor =
+    service === "SLA" ||
+    service === "SLS" ||
+    service === "3D Printing" ||
+    service === "Stampa 3D";
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center px-1 md:px-6 py-12 mt-16 backdrop-blur-xl bg-transparent">
@@ -261,14 +305,18 @@ const QuoteCalculator = () => {
                 )}
               </div>
               {errorMessages.file && (
-                <p className="text-red-400 text-sm mt-2">{errorMessages.file}</p>
+                <p className="text-red-400 text-sm mt-2">
+                  {errorMessages.file}
+                </p>
               )}
             </div>
 
             <div className="p-6 rounded-2xl shadow-lg bg-white/10 border border-white/20 space-y-4">
               <div className="flex items-center gap-3 mb-2">
                 <Layers size={24} />
-                <h2 className="text-2xl font-semibold">{texts.selectOptionsTitle}</h2>
+                <h2 className="text-2xl font-semibold">
+                  {texts.selectOptionsTitle}
+                </h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -284,7 +332,9 @@ const QuoteCalculator = () => {
                     }}
                     className="w-full p-2 rounded-lg bg-white/20 border border-white/30"
                   >
-                    <option value={language === "it" ? "Stampa 3D" : "3D Printing"}>
+                    <option
+                      value={language === "it" ? "Stampa 3D" : "3D Printing"}
+                    >
                       {language === "it" ? "Stampa 3D" : "3D Printing"}
                     </option>
                     <option value={language === "it" ? "SLA" : "SLA"}>
@@ -293,7 +343,11 @@ const QuoteCalculator = () => {
                     <option value={language === "it" ? "SLS" : "SLS"}>
                       {language === "it" ? "SLS" : "SLS"}
                     </option>
-                    <option value={language === "it" ? "Lavorazioni CNC" : "CNC Machining"}>
+                    <option
+                      value={
+                        language === "it" ? "Lavorazioni CNC" : "CNC Machining"
+                      }
+                    >
                       {language === "it" ? "Lavorazioni CNC" : "CNC Machining"}
                     </option>
                   </select>
@@ -303,60 +357,74 @@ const QuoteCalculator = () => {
                   <label className="font-medium">{texts.materialLabel}</label>
                   <select
                     value={material}
-                    onChange={(e) => setMaterial(e.target.value)}
+                    onChange={(e) => {
+                      setMaterial(e.target.value);
+                      setColor("");
+                      setErrorMessages((prev) => ({
+                        ...prev,
+                        material: "",
+                        color: "",
+                      }));
+                    }}
                     className="w-full p-2 rounded-lg bg-white/20 border border-white/30"
                   >
                     <option value="">{texts.selectMaterial}</option>
-                    {service === (language === "it" ? "Stampa 3D" : "3D Printing")
-                      ? Object.keys(materials3D.FDM).map((mat) => (
-                          <option key={mat} value={mat}>
-                            {mat}
-                          </option>
-                        ))
-                      : service === (language === "it" ? "SLS" : "SLS") ? 
-                        Object.keys(materialsSLS).map((mat) => (
-                          <option key={mat} value={mat}>
-                            {mat}
-                          </option>
-                        ))
-                      : service === (language === "it" ? "SLA" : "SLA") ? 
-                      Object.keys(materialSLA).map((mat) => (
-                        <option key={mat} value={mat}>
-                          {mat}
-                        </option>
-                      )) : Object.keys(materialsCNC).map((mat) => (
-                          <option key={mat} value={mat}>
-                            {mat}
-                          </option>
-                        ))}
+
+                    {Object.keys(availableMaterials).map((mat) => (
+                      <option key={mat} value={mat}>
+                        {mat}
+                      </option>
+                    ))}
                   </select>
+
                   {errorMessages.material && (
-                    <p className="text-red-400 text-sm mt-1">{errorMessages.material}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errorMessages.material}
+                    </p>
                   )}
                 </div>
 
-                {service === (language === "it" ? "Stampa 3D" : "3D Printing") && (
+                {showColor && (
                   <div>
                     <label className="font-medium">{texts.colorLabel}</label>
+
                     <select
                       value={color}
-                      onChange={(e) => setColor(e.target.value)}
-                      disabled={!material}
+                      onChange={(e) => {
+                        setColor(e.target.value);
+                        setErrorMessages((prev) => ({
+                          ...prev,
+                          color: "",
+                        }));
+                      }}
+                      disabled={!material || availableColors.length === 0}
                       className={`w-full p-2 rounded-lg border border-white/30 transition ${
-                        !material
+                        !material || availableColors.length === 0
                           ? "bg-white/10 text-gray-400 cursor-not-allowed"
                           : "bg-white/20"
                       }`}
                     >
                       <option value="">{texts.selectColor}</option>
-                      {(materials3D.FDM[material] || materials3D.MSLA[material] || []).map((c) => (
+
+                      {availableColors.map((c) => (
                         <option key={c} value={c}>
                           {c}
                         </option>
                       ))}
                     </select>
+
+                    {material && availableColors.length === 0 && (
+                      <p className="text-sm opacity-70 mt-1">
+                        {language === "it"
+                          ? "Nessun colore disponibile per questo materiale."
+                          : "No colors available for this material."}
+                      </p>
+                    )}
+
                     {errorMessages.color && (
-                      <p className="text-red-400 text-sm mt-1">{errorMessages.color}</p>
+                      <p className="text-red-400 text-sm mt-1">
+                        {errorMessages.color}
+                      </p>
                     )}
                   </div>
                 )}
@@ -371,7 +439,9 @@ const QuoteCalculator = () => {
                     className="w-full p-2 rounded-lg bg-white/20 border border-white/30 h-[28px]"
                   />
                   {errorMessages.quantity && (
-                    <p className="text-red-400 text-sm mt-1">{errorMessages.quantity}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errorMessages.quantity}
+                    </p>
                   )}
                 </div>
               </div>
@@ -386,7 +456,9 @@ const QuoteCalculator = () => {
                 className="w-full p-2 rounded-lg bg-white/20 border border-white/30"
               />
               {errorMessages.email && (
-                <p className="text-red-400 text-sm mt-1">{errorMessages.email}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errorMessages.email}
+                </p>
               )}
             </div>
 
@@ -399,7 +471,9 @@ const QuoteCalculator = () => {
                 className="w-full p-2 rounded-lg bg-white/20 border border-white/30"
               />
               {errorMessages.phone && (
-                <p className="text-red-400 text-sm mt-1">{errorMessages.phone}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errorMessages.phone}
+                </p>
               )}
             </div>
 
